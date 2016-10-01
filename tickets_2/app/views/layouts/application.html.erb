@@ -11,6 +11,31 @@
   <body>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <p class="sign-out">sign_out</p>
     <%= yield %>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('.sign-out').click(function(){
+          $.ajax({
+            url: 'users/sign_out',
+            type: 'DELETE',
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (returndata) {
+              console.log('success')
+              console.log(returndata)
+            },
+            error: function(returndata) {
+              console.log('error')
+              console.log(returndata)
+            },
+            complete: function () {
+            },
+          });
+        })
+      });
+    </script>
   </body>
 </html>
