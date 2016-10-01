@@ -3,8 +3,13 @@ window.Tickets2 =
   Collections: {}
   Views: {}
   Routers: {}
+  Vars: {}
   initialize: ->
-    #alert 'Hello from Backbone!'
+    Tickets2.Vars.currentUser = new Tickets2.Models.User()
+    setCurrentUserId()
+    view = new Tickets2.Views.UsersLogin({})
+    view.render()
 
 $(document).ready ->
   Tickets2.initialize()
+

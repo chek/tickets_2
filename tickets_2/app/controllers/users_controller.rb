@@ -14,13 +14,18 @@ class UsersController < ApplicationController
     if !@user.blank?
       if @user.valid_password?(params[:password])
         sign_in(:user, @user)
-        return render json: nil, :status => 200
+        return render json: {user_id: @user.id}, :status => 200
       else
         return render json: nil, :status => 401
       end
     else
       return render json: nil, :status => 404
     end
+  end
+
+  def sign_out_ajax
+    sign_out(current_user)
+    return render json: nil, :status => 200
   end
 
   # GET /users/1
