@@ -1,0 +1,4 @@
+backend/.idea
+backend/tmp/pids/server.pid
+.idea
+*.DS_Store
