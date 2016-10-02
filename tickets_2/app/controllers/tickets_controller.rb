@@ -1,6 +1,16 @@
 class TicketsController < ApplicationController
   before_action :current_user_customer?, only: [:create]
 
+  # GET /tickets
+  # GET /tickets.json
+  def index
+    if current_user.role == UserRole::CUSTOMER
+      @tickets = Ticket.where('customer_id = ?', current_user.id).order('created_at DESC')
+    elsif current_user.role == UserRole::SUPPORT
+      @tickets = Ticket.where('agent_id = ?', current_user.id).order('created_at DESC')
+    end
+    return render json: {tickets: @tickets}, :status => 200
+  end
 
   # POST /tickets
   # POST /tickets.json
