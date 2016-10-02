@@ -14,14 +14,5 @@
     <div id="content"></div>
     <%= yield %>
   </div>
-  <script type="text/javascript">
-    var initCurrentUser = function() {
-      <% if !current_user.blank? %>
-        Tickets2.setCurrentUser(<%= current_user.id %>, '<%= current_user.role %>')
-      <% else %>
-        Tickets2.setCurrentUser(null, null)
-      <% end %>
-    };
-  </script>
   </body>
 </html>

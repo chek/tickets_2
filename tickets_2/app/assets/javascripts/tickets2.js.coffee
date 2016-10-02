@@ -5,8 +5,12 @@ window.Tickets2 =
   Routers: {}
   Vars: {}
   initialize: ->
-    initCurrentUser()
+    Tickets2.initializeCurrentUser()
     Tickets2.initViews()
+  initializeCurrentUser: (id, role) ->
+    #console.log Tickets2.Models.User
+    Tickets2.Vars.currentUser = new Tickets2.Models.User()
+    Tickets2.Vars.currentUser.getCurrentUser()
   setCurrentUser: (id, role) ->
     Tickets2.Vars.currentUser = new Tickets2.Models.User()
     if id?

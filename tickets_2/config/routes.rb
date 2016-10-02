@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post 'users/sign_up_ajax', to: 'users#sign_up_ajax'
   post 'users/update_role', to: 'users#update_role'
   get 'users/list', to: 'users#index'
+  get 'users/get_current_user', to: 'users#get_current_user'
   resources :tickets
   devise_for :users
   root to: "home#index"

@@ -32,3 +32,11 @@ class Tickets2.Models.User extends Tickets2.Models.Base
   updateRole: ->
     this.restMethod('update_role?id='+this.get('id')+'&role='+this.get('role'), 'POST', null, null);
     return
+
+
+  getCurrentUserSuccess: (data) ->
+    Tickets2.setCurrentUser(data.user_id, data.role)
+
+  getCurrentUser: ->
+    this.restMethod('get_current_user', 'GET', this.getCurrentUserSuccess, null);
+    return

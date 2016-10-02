@@ -1,6 +1,12 @@
 class UsersController < ApplicationController
   before_action :current_user_admin?, only: [:index, :update_role]
 
+  # GET /get_current_user
+  def get_current_user
+    return render json: {user_id: current_user.id, role: current_user.role}, :status => 200 if !current_user.blank?
+    return render json: {user_id: nil, role: nil}, :status => 200 if current_user.blank?
+  end
+
   # GET /users
   # GET /users.json
   def index
