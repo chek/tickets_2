@@ -7,6 +7,17 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def sign_up_ajax
+    @user = User.where('email = ?', params[:email]).first
+    if @user.blank?
+      @user = User.new(:email => params[:email], :password => params[:password], :password_confirmation => params[:password])
+      @user.save
+      return render json: {user_id: @user.id}, :status => 200
+    else
+      return render json: nil, :status => 406
+    end
+  end
+
   # POST /users
   # POST  /users.json
   def sign_in_ajax
