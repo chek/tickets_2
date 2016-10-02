@@ -61,7 +61,8 @@ class Tickets2.Views.TicketListItem extends Backbone.View
 
   deleteTicket: (e) ->
     e.preventDefault()
-    this.model.deleteTicket()
+    nextStatus = Tickets2.Models.Ticket.deletedStatus
+    this.model.update(nextStatus)
     $('.delete.modal-form', this.$el).modal('hide')
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();

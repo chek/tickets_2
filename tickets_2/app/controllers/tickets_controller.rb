@@ -9,7 +9,10 @@ class TicketsController < ApplicationController
     elsif current_user.role == UserRole::SUPPORT
       @tickets = Ticket.where('agent_id = ?', current_user.id).where('status not in (?)',[TicketStatus::DELETED, TicketStatus::CLOSED]).order('created_at DESC')
     end
-    return render json: {tickets: @tickets}, :status => 200
+    customers_ids = @tickets.map{|ticket| ticket.customer_id}
+    @customers = User.where('id in (?)', customers_ids)
+    #fetch customers together with tickets, search 1475435340
+    return render json: {tickets: @tickets, customers: @customers}, :status => 200
   end
 
   # POST /tickets
@@ -23,10 +26,28 @@ class TicketsController < ApplicationController
     return render json: {ticket: @ticket}, :status => 200
   end
 
-  def delete_ticket
+  def update_ticket
     @ticket = Ticket.find(params[:id])
-    if @ticket.customer_id == current_user.id
+    if params[:status].to_i == TicketStatus::DELETED and @ticket.customer_id == current_user.id
       @ticket.status = TicketStatus::DELETED
+      @ticket.save
+    elsif params[:status].to_i == TicketStatus::IN_PROCESS and @ticket.agent_id == current_user.id
+      @ticket.status = TicketStatus::IN_PROCESS
+      @ticket.save
+      return render json: {ticket: @ticket}, :status => 200
+    elsif params[:status].to_i == TicketStatus::CLOSED and @ticket.agent_id == current_user.id
+      @ticket.status = TicketStatus::CLOSED
+      @ticket.save
+      return render json: {ticket: @ticket}, :status => 200
+    else
+      return render json: {}, :status => 401
+    end
+  end
+
+  def update_process
+    @ticket = Ticket.find(params[:id])
+    if @ticket.agent_id == current_user.id
+      @ticket.status = TicketStatus::IN_PROCESS
       @ticket.save
       return render json: {ticket: @ticket}, :status => 200
     else

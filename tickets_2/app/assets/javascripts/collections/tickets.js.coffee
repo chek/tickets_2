@@ -5,4 +5,6 @@ class Tickets2.Collections.Tickets extends Backbone.Collection
   url: '/tickets/list'
 
   parse: (response) ->
+    #fetch customers together with tickets, search 1475435340
+    Tickets2.Vars.customers = new Tickets2.Collections.Users(response.customers)
     return response.tickets

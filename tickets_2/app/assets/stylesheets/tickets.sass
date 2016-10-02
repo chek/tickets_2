@@ -1,7 +1,7 @@
 .create-ticket-btn
   margin-right: 5px
 ul.tickets
-  width: 500px
+  width: 525px
   margin: 0 auto
   li
     height: 27px
@@ -11,6 +11,10 @@ ul.tickets
       width: 22%
       text-align: left
       float: left
+      display: inline-block
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
     .description
       display: inline-block
       width: 40%
@@ -20,7 +24,7 @@ ul.tickets
     .status
       float: left
       margin-right: 5px
-      width: 50px
+      width: 75px
     .delete-btn
       margin-right: 5px
     > .btn

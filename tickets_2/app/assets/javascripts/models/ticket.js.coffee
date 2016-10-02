@@ -1,8 +1,9 @@
 class Tickets2.Models.Ticket extends Tickets2.Models.Base
-
+  #tickets statuses, search 1475436409
   @newStatus: 0
   @inProcessStatus: 1
   @closedStatus: 2
+  @deletedStatus: 4
 
   @ticketToDelete: null
 
@@ -24,11 +25,6 @@ class Tickets2.Models.Ticket extends Tickets2.Models.Base
 
   urlRoot: '/tickets'
 
-  ticketDeleted: ->
-    Tickets2.Vars.tickets.remove(Tickets2.Models.Ticket.ticketToDelete.get('id'))
-    Tickets2.Views.TicketsIndex.render()
-    return
-
   ticketCreated: (data) ->
     ticket = new Tickets2.Models.Ticket(data.ticket);
     Tickets2.Vars.tickets.add(ticket)
@@ -39,7 +35,10 @@ class Tickets2.Models.Ticket extends Tickets2.Models.Base
     this.restMethod('create?subject='+subject+'&description='+description, 'POST', this.ticketCreated, errorHandler)
     return
 
-  deleteTicket: ->
-    Tickets2.Models.Ticket.ticketToDelete = this
-    this.restMethod('delete_ticket?id='+Tickets2.Models.Ticket.ticketToDelete.get('id'), 'DELETE', this.ticketDeleted, null)
+  refreshTickets: ->
+    Tickets2.Views.TicketsIndex.render()
+    return
+
+  update: (status) ->
+    this.restMethod('update_ticket?id='+this.get('id')+'&status='+status, 'PATCH', this.refreshTickets, null)
     return
