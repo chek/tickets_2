@@ -5,9 +5,9 @@ class TicketsController < ApplicationController
   # GET /tickets.json
   def index
     if current_user.role == UserRole::CUSTOMER
-      @tickets = Ticket.where('customer_id = ?', current_user.id).order('created_at DESC')
+      @tickets = Ticket.where('customer_id = ?', current_user.id).where('status not in (?)',[TicketStatus::DELETED]).order('created_at DESC')
     elsif current_user.role == UserRole::SUPPORT
-      @tickets = Ticket.where('agent_id = ?', current_user.id).order('created_at DESC')
+      @tickets = Ticket.where('agent_id = ?', current_user.id).where('status not in (?)',[TicketStatus::DELETED, TicketStatus::CLOSED]).order('created_at DESC')
     end
     return render json: {tickets: @tickets}, :status => 200
   end
@@ -18,6 +18,17 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(:subject => params[:subject], :description => params[:description], :customer_id => current_user.id, :status => TicketStatus::NEW)
     @ticket.save
     return render json: {ticket: @ticket}, :status => 200
+  end
+
+  def delete_ticket
+    @ticket = Ticket.find(params[:id])
+    if @ticket.customer_id == current_user.id
+      @ticket.status = TicketStatus::DELETED
+      @ticket.save
+      return render json: {ticket: @ticket}, :status => 200
+    else
+      return render json: {}, :status => 401
+    end
   end
 
   private

@@ -34,12 +34,6 @@ class Tickets2.Views.CreateTicket extends Backbone.View
     'click button.create-ticket-submit': 'createTicket'
   }
 
-  createTicketSuccess: ->
-    $('#create-ticket-container').modal('hide')
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
-    return
-
   createTicket: (e) ->
     e.preventDefault()
     $('#create-ticket-container .help-inline').hide()
@@ -58,7 +52,10 @@ class Tickets2.Views.CreateTicket extends Backbone.View
       $('#ticket-subject').val('')
       $('#ticket-description').val('')
       ticket = new Tickets2.Models.Ticket()
-      ticket.create(subject, description, this.createTicketSuccess, null)
+      ticket.create(subject, description, null, null)
+      $('#create-ticket-container').modal('hide')
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
     return
 
   render: ->

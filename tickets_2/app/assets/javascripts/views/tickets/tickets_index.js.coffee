@@ -1,5 +1,9 @@
 class Tickets2.Views.TicketsIndex extends Backbone.View
 
+  @render: ->
+    ticketsIndexView = new Tickets2.Views.TicketsIndex({})
+    ticketsIndexView.render()
+
   template: _.template("<h1>Tickets</h1>" +
                        "<ul class='tickets list-unstyled'></ul>")
 
@@ -9,7 +13,8 @@ class Tickets2.Views.TicketsIndex extends Backbone.View
     Tickets2.Vars.tickets = new Tickets2.Collections.Tickets()
     this.listenTo(Tickets2.Vars.tickets, 'add', this.addOne);
     this.listenTo(Tickets2.Vars.tickets, 'reset', this.addAll);
-    this.listenTo(Tickets2.Vars.tickets, 'all', this.all);
+    this.on('remove', this.render);
+    #this.listenTo(Tickets2.Vars.tickets, 'remove', this.render);
 
   render: ->
     Tickets2.Vars.tickets.fetch({reset: true})

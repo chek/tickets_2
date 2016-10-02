@@ -1,7 +1,11 @@
 class Tickets2.Views.TicketListItem extends Backbone.View
 
-  template: _.template("<span class='status'><%- Tickets2.Models.Ticket.statusLabel(status) %></span><span class='subject'><%- subject %></span><span class='description'><%- description %></span><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>'>open</button>
-                               <div class='modal fade modal-form <%- id %>' tabindex='-1' role='dialog' aria-labelledby='modal-label' aria-hidden='true'>
+  template: _.template("<span class='status'><%- Tickets2.Models.Ticket.statusLabel(status) %></span>
+                            <span class='subject'><%- subject %></span>
+                            <span class='description'><%- description %></span>
+                            <button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>_edit'>open</button>
+                            <button type='button' class='btn delete-btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>_delete'>delete</button>
+                            <div class='modal fade modal-form <%- id %>_edit' tabindex='-1' role='dialog' aria-labelledby='modal-label' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
                                   <div class='modal-header'>
@@ -19,9 +23,29 @@ class Tickets2.Views.TicketListItem extends Backbone.View
                                         <p><%- description %></p>
                                       </div>
                                       <div class='form-group'>
-                                        <% if (status == Tickets2.Models.Ticket.closedStatus) { %>
-                                        <button class='btn update-role btn-primary' >Submit</button>
-                                        <% } %>
+                                        <button class='btn  btn-primary' >Submit</button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class='modal fade delete modal-form <%- id %>_delete' tabindex='-1' role='dialog' aria-labelledby='modal-label' aria-hidden='true'>
+                              <div class='modal-dialog modal-sm'>
+                                <div class='modal-content'>
+                                  <div class='modal-header'>
+                                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                      <span aria-hidden='true'>×</span>
+                                    </button>
+                                    <h4 class='modal-title' id='modal-label'>Delete ticket?</h4>
+                                  </div>
+                                  <div class='modal-body'>
+                                    <form data-toggle='validator' role='form'>
+                                      <div class='form-group'>
+                                        <label for='inputEmail' class='control-label'><%- subject %></label>
+                                      </div>
+                                      <div class='form-group'>
+                                        <button class='btn confirm-delete btn-primary' >Delete</button>
                                       </div>
                                     </form>
                                   </div>
@@ -32,18 +56,26 @@ class Tickets2.Views.TicketListItem extends Backbone.View
   tagName:  'li'
 
   events: {
-    'click button.update-role': 'updateRole',
+    'click button.confirm-delete': 'deleteTicket',
   }
 
-  updateRole: (e) ->
+  deleteTicket: (e) ->
+    console.log 'deleteTicket view'
     e.preventDefault()
-    this.model.set('role', $('.roles-list', this.$el).val())
-    this.model.updateRole()
-    $('span.role', this.$el).text($('.roles-list', this.$el).val())
-    $('.modal-form', this.$el).modal('hide')
-    $('#sign-up-container').modal('hide')
+    console.log this.model.get('id')
+    console.log Tickets2.Vars.tickets.size()
+    this.model.deleteTicket()
+
+    #Tickets2.Vars.tickets.remove(this.model.get('id'));
+    #console.log Tickets2.Vars.tickets.size()
+    #this.ticketDeleted()
+
+    console.log this.model.get('id')
+    console.log Tickets2.Vars.tickets.size()
+    $('.delete.modal-form', this.$el).modal('hide')
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
+
     return
 
   render: ->
