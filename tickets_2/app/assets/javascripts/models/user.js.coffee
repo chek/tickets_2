@@ -32,9 +32,13 @@ class Tickets2.Models.User extends Backbone.Model
       success: (data, textStatus, jqXHR) ->
         Tickets2.Vars.currentUser = new Tickets2.Models.User()
         Tickets2.Vars.currentUser.set('id',data.user_id)
+        Tickets2.Vars.currentUser.set('role',data.role)
         successHandler()
-        view = new Tickets2.Views.UsersLogin({})
-        view.render()
+        loginView = new Tickets2.Views.UsersLogin({})
+        loginView.render()
+        if Tickets2.Vars.currentUser.get('role') == 'admin'
+          usersView = new Tickets2.Views.UsersIndex({})
+          usersView.render()
     return
 
   signup: (email, password, successHandler, errorHandler) ->
@@ -50,7 +54,11 @@ class Tickets2.Models.User extends Backbone.Model
       success: (data, textStatus, jqXHR) ->
         Tickets2.Vars.currentUser = new Tickets2.Models.User()
         Tickets2.Vars.currentUser.set('id',data.user_id)
+        Tickets2.Vars.currentUser.set('role',data.role)
         successHandler()
         view = new Tickets2.Views.UsersLogin({})
         view.render()
+        if Tickets2.Vars.currentUser.get('role') == 'admin'
+          usersView = new Tickets2.Views.UsersIndex({})
+          usersView.render()
     return
