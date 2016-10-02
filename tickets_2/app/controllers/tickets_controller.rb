@@ -11,8 +11,10 @@ class TicketsController < ApplicationController
     end
     customers_ids = @tickets.map{|ticket| ticket.customer_id}
     @customers = User.where('id in (?)', customers_ids)
-    #fetch customers together with tickets, search 1475435340
-    return render json: {tickets: @tickets, customers: @customers}, :status => 200
+    agents_ids = @tickets.map{|ticket| ticket.agent_id}
+    @agents = User.where('id in (?)', agents_ids)
+    #fetch customers and agents together with tickets, search 1475435340
+    return render json: {tickets: @tickets, customers: @customers, agents: @agents }, :status => 200
   end
 
   # POST /tickets
@@ -28,13 +30,17 @@ class TicketsController < ApplicationController
 
   def update_ticket
     @ticket = Ticket.find(params[:id])
+    #customer can only delete ticket
     if params[:status].to_i == TicketStatus::DELETED and @ticket.customer_id == current_user.id
       @ticket.status = TicketStatus::DELETED
       @ticket.save
+      return render json: {ticket: @ticket}, :status => 200
+    #support can process ticket
     elsif params[:status].to_i == TicketStatus::IN_PROCESS and @ticket.agent_id == current_user.id
       @ticket.status = TicketStatus::IN_PROCESS
       @ticket.save
       return render json: {ticket: @ticket}, :status => 200
+    #support can close ticket
     elsif params[:status].to_i == TicketStatus::CLOSED and @ticket.agent_id == current_user.id
       @ticket.status = TicketStatus::CLOSED
       @ticket.save

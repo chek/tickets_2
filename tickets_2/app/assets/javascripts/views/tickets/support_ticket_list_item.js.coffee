@@ -16,7 +16,11 @@ class Tickets2.Views.SupportTicketListItem extends Backbone.View
                                   <div class='modal-body'>
                                     <form data-toggle='validator' role='form'>
                                       <div class='form-group'>
-                                        <label for='inputEmail' class='control-label'><%- subject %></label>
+                                        <label>Customer email:</label>
+                                        <label><%- customer.get('email') %></label>
+                                      </div>
+                                      <div class='form-group'>
+                                        <label><%- subject %></label>
                                       </div>
                                       <div class='form-group'>
                                         <p><%- description %></p>

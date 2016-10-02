@@ -3,6 +3,10 @@
 ul.tickets
   width: 525px
   margin: 0 auto
+  @media only screen and (max-width: 580px)
+    width: 400px
+  @media only screen and (max-width: 430px)
+    width: 300px
   li
     height: 27px
     line-height: 27px
@@ -15,12 +19,16 @@ ul.tickets
       overflow: hidden
       text-overflow: ellipsis
       white-space: nowrap
+      @media only screen and (max-width: 580px)
+        width: 33%
     .description
       display: inline-block
       width: 40%
       overflow: hidden
       text-overflow: ellipsis
       white-space: nowrap
+      @media only screen and (max-width: 580px)
+        display: none
     .status
       float: left
       margin-right: 5px

@@ -25,8 +25,12 @@ class Tickets2.Views.TicketsIndex extends Backbone.View
   addOne: (ticket) ->
     #diffferent view for support agent and customer
     if Tickets2.Models.User.currentUser.get('role') == Tickets2.Models.User.customerRole
+      agent = Tickets2.Vars.agents.find((model) ->return model.get('id') == ticket.get('agent_id'))
+      ticket.set('agent', agent)
       view = new Tickets2.Views.TicketListItem({ model: ticket });
     if Tickets2.Models.User.currentUser.get('role') == Tickets2.Models.User.supportRole
+      customer = Tickets2.Vars.customers.find((model) ->return model.get('id') == ticket.get('customer_id'))
+      ticket.set('customer', customer)
       view = new Tickets2.Views.SupportTicketListItem({ model: ticket });
     this.$list.append(view.render().el);
 
