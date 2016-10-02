@@ -9,7 +9,7 @@ class Tickets2.Models.User extends Tickets2.Models.Base
     Tickets2.initViews()
 
   logout: ->
-    this.restMethod('sign_out_ajax', 'POST', this.logoutSuccess, null);
+    this.restMethod('sign_out_ajax', 'POST', this.logoutSuccess, this.logoutSuccess);
     return
 
   loginSuccess: (data) ->

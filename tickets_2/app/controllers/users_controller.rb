@@ -32,6 +32,7 @@ class UsersController < ApplicationController
     if @user.blank?
       @user = User.new(:email => params[:email], :password => params[:password], :password_confirmation => params[:password], :role => UserRole::CUSTOMER)
       @user.save
+      sign_in(:user, @user)
       return render json: {user_id: @user.id, role: @user.role}, :status => 200
     else
       return render json: nil, :status => 406

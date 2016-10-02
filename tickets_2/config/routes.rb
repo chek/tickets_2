@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   get 'home/index'
   post 'users/sign_in_ajax', to: 'users#sign_in_ajax'
   post 'users/sign_out_ajax', to: 'users#sign_out_ajax'
