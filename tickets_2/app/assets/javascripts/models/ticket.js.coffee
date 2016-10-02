@@ -40,7 +40,6 @@ class Tickets2.Models.Ticket extends Tickets2.Models.Base
     return
 
   deleteTicket: ->
-    console.log 'deleteTicket'
     Tickets2.Models.Ticket.ticketToDelete = this
     this.restMethod('delete_ticket?id='+Tickets2.Models.Ticket.ticketToDelete.get('id'), 'DELETE', this.ticketDeleted, null)
     return

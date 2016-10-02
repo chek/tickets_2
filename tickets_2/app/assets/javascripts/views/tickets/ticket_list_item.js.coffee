@@ -60,22 +60,11 @@ class Tickets2.Views.TicketListItem extends Backbone.View
   }
 
   deleteTicket: (e) ->
-    console.log 'deleteTicket view'
     e.preventDefault()
-    console.log this.model.get('id')
-    console.log Tickets2.Vars.tickets.size()
     this.model.deleteTicket()
-
-    #Tickets2.Vars.tickets.remove(this.model.get('id'));
-    #console.log Tickets2.Vars.tickets.size()
-    #this.ticketDeleted()
-
-    console.log this.model.get('id')
-    console.log Tickets2.Vars.tickets.size()
     $('.delete.modal-form', this.$el).modal('hide')
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
-
     return
 
   render: ->
