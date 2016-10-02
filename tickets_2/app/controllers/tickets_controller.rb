@@ -15,7 +15,10 @@ class TicketsController < ApplicationController
   # POST /tickets
   # POST /tickets.json
   def create
-    @ticket = Ticket.new(:subject => params[:subject], :description => params[:description], :customer_id => current_user.id, :status => TicketStatus::NEW)
+    support_agents = User.where('role = ?', UserRole::SUPPORT).order("RAND()")
+    support_agents_ids = support_agents.map{|support_agent| support_agent.id}
+    support_agent_id = support_agents_ids.sample
+    @ticket = Ticket.new(:subject => params[:subject], :description => params[:description], :agent_id => support_agent_id, :customer_id => current_user.id, :status => TicketStatus::NEW)
     @ticket.save
     return render json: {ticket: @ticket}, :status => 200
   end
