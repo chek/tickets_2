@@ -15,10 +15,11 @@
     <%= yield %>
   </div>
   <script type="text/javascript">
-    var setCurrentUserId = function() {
+    var initCurrentUser = function() {
       <% if !current_user.blank? %>
-      Tickets2.Vars.currentUser.set('id', <%= current_user.id %>);
-      Tickets2.Vars.currentUser.set('role', '<%= current_user.role %>');
+        Tickets2.setCurrentUser(<%= current_user.id %>, '<%= current_user.role %>')
+      <% else %>
+        Tickets2.setCurrentUser(null, null)
       <% end %>
     };
   </script>

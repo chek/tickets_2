@@ -13,9 +13,8 @@ class Tickets2.Models.User extends Backbone.Model
       processData: false,
       error: (jqXHR, textStatus, errorThrown) ->
       success: (data, textStatus, jqXHR) ->
-        Tickets2.Vars.currentUser = new Tickets2.Models.User()
-        view = new Tickets2.Views.UsersLogin({})
-        view.render()
+        Tickets2.setCurrentUser(null, null)
+        Tickets2.initViews()
     return
 
 
@@ -30,15 +29,9 @@ class Tickets2.Models.User extends Backbone.Model
       error: (jqXHR, textStatus, errorThrown) ->
         errorHandler()
       success: (data, textStatus, jqXHR) ->
-        Tickets2.Vars.currentUser = new Tickets2.Models.User()
-        Tickets2.Vars.currentUser.set('id',data.user_id)
-        Tickets2.Vars.currentUser.set('role',data.role)
+        Tickets2.setCurrentUser(data.user_id, data.role)
         successHandler()
-        loginView = new Tickets2.Views.UsersLogin({})
-        loginView.render()
-        if Tickets2.Vars.currentUser.get('role') == 'admin'
-          usersView = new Tickets2.Views.UsersIndex({})
-          usersView.render()
+        Tickets2.initViews()
     return
 
   signup: (email, password, successHandler, errorHandler) ->
@@ -52,13 +45,7 @@ class Tickets2.Models.User extends Backbone.Model
       error: (jqXHR, textStatus, errorThrown) ->
         errorHandler()
       success: (data, textStatus, jqXHR) ->
-        Tickets2.Vars.currentUser = new Tickets2.Models.User()
-        Tickets2.Vars.currentUser.set('id',data.user_id)
-        Tickets2.Vars.currentUser.set('role',data.role)
+        Tickets2.setCurrentUser(data.user_id, data.role)
         successHandler()
-        view = new Tickets2.Views.UsersLogin({})
-        view.render()
-        if Tickets2.Vars.currentUser.get('role') == 'admin'
-          usersView = new Tickets2.Views.UsersIndex({})
-          usersView.render()
+        Tickets2.initViews()
     return
