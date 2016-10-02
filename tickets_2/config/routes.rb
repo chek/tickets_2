@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   post 'users/update_role', to: 'users#update_role'
   get 'users/list', to: 'users#index'
   resources :tickets
-  #resources :users
   devise_for :users
   root to: "home#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

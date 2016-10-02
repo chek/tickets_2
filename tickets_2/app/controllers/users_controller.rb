@@ -49,8 +49,12 @@ class UsersController < ApplicationController
 
   # POST /users/sign_out_ajax
   def sign_out_ajax
-    sign_out(current_user) if !current_user.blank?
-    return render json: nil, :status => 200
+    if !current_user.blank?
+      sign_out(current_user)
+      return render json: nil, :status => 200
+    else
+      return render json: nil, :status => 404
+    end
   end
 
   private

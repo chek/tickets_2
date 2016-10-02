@@ -9,7 +9,9 @@ one:
   email: test@email.com
   encrypted_password: $2a$11$qCOolyIdu2.XKdNdsNZEkeon3gRZdzFttSHP5VH.zay2pArmgsqcC
   role: admin
-# column: value
-#
-two: {}
-# column: value
+
+two:
+  id: 2
+  email: test1@email.com
+  encrypted_password: $2a$11$qCOolyIdu2.XKdNdsNZEkeon3gRZdzFttSHP5VH.zay2pArmgsqcC
+  role: support
