@@ -28,3 +28,7 @@ class Tickets2.Models.User extends Tickets2.Models.Base
     Tickets2.Vars.successHandler = successHandler
     this.restMethod('sign_up_ajax?email='+email+'&password='+password, 'POST', this.loginSuccess, errorHandler);
     return
+
+  updateRole: ->
+    this.restMethod('update_role?id='+this.get('id')+'&role='+this.get('role'), 'POST', null, null);
+    return

@@ -4,9 +4,19 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.where('email != ?', current_user.email)
+    return render json: {users: @users}, :status => 200
   end
 
+  # POST /users/update_role
+  def update_role
+    @user = User.find(params[:id])
+    @user.role = params[:role]
+    @user.save
+    return render json: {user: @user}, :status => 200
+  end
+
+  # POST /users/sign_up_ajax
   def sign_up_ajax
     @user = User.where('email = ?', params[:email]).first
     if @user.blank?
@@ -18,8 +28,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST /users
-  # POST  /users.json
+  # POST /users/sign_in_ajax
   def sign_in_ajax
     @user = User.where('email = ?', params[:email]).first
     if !@user.blank?
@@ -34,6 +43,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users/sign_out_ajax
   def sign_out_ajax
     sign_out(current_user)
     return render json: nil, :status => 200

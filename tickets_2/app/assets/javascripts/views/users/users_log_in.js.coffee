@@ -89,6 +89,7 @@ class Tickets2.Views.UsersLogin extends Backbone.View
 
   success: ->
     $('#login-container').modal('hide')
+    $('#sign-up-container').modal('hide')
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
     return

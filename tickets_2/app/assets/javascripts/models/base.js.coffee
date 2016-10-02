@@ -10,7 +10,9 @@ class Tickets2.Models.Base extends  Backbone.Model
       contentType: false,
       processData: false,
       error: (jqXHR, textStatus, errorThrown) ->
-        errorHandler()
+        if errorHandler?
+          errorHandler()
       success: (data, textStatus, jqXHR) ->
-        successHandler(data)
+        if successHandler?
+          successHandler(data)
     return
