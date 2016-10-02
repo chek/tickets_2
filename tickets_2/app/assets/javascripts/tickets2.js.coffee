@@ -19,8 +19,8 @@ window.Tickets2 =
       usersView = new Tickets2.Views.UsersIndex({})
       usersView.render()
     if Tickets2.Models.User.currentUser.get('role') == Tickets2.Models.User.customerRole
-      usersView = new Tickets2.Views.UsersIndex({})
-      usersView.render()
+      createTicketView = new Tickets2.Views.CreateTicket({})
+      createTicketView.render()
 
 
 $(document).ready ->
