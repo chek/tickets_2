@@ -1,14 +1,14 @@
 class Tickets2.Views.TicketListItem extends Backbone.View
 
-  template: _.template("<span class='status'><%- Tickets2.Models.Ticket.statusLabel(status) %></span><span class='subject'><%- subject %></span><span class='description'><%- description %></span><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>'>edit</button>
-                               <div class='modal fade modal-form <%- id %>' tabindex='-1' role='dialog' aria-labelledby='mySmallModalLabel' aria-hidden='true'>
+  template: _.template("<span class='status'><%- Tickets2.Models.Ticket.statusLabel(status) %></span><span class='subject'><%- subject %></span><span class='description'><%- description %></span><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>'>open</button>
+                               <div class='modal fade modal-form <%- id %>' tabindex='-1' role='dialog' aria-labelledby='modal-label' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
                                   <div class='modal-header'>
                                     <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
                                       <span aria-hidden='true'>×</span>
                                     </button>
-                                    <h4 class='modal-title' id='mySmallModalLabel'>Edit user</h4>
+                                    <h4 class='modal-title' id='modal-label'>Edit ticket</h4>
                                   </div>
                                   <div class='modal-body'>
                                     <form data-toggle='validator' role='form'>
@@ -16,11 +16,12 @@ class Tickets2.Views.TicketListItem extends Backbone.View
                                         <label for='inputEmail' class='control-label'><%- subject %></label>
                                       </div>
                                       <div class='form-group'>
-                                        <label for='inputPassword' class='control-label'>Role</label>
-
+                                        <p><%- description %></p>
                                       </div>
                                       <div class='form-group'>
+                                        <% if (status == Tickets2.Models.Ticket.closedStatus) { %>
                                         <button class='btn update-role btn-primary' >Submit</button>
+                                        <% } %>
                                       </div>
                                     </form>
                                   </div>
