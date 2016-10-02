@@ -34,5 +34,9 @@ class Tickets2.Views.TicketsIndex extends Backbone.View
     this.$list.append(view.render().el);
 
   addAll: ->
+    header = "<li><h5 class='status'>Status</h5>
+        <h5 class='subject'>Subject</h5>
+        <h5 class='description'>Description</h5></li>"
+    this.$list.append(header);
     if Tickets2.Vars.tickets?
       Tickets2.Vars.tickets.each(this.addOne, this);
