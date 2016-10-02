@@ -13,6 +13,7 @@ window.Tickets2 =
       Tickets2.Vars.currentUser.set('id', id)
       Tickets2.Vars.currentUser.set('role', role)
   initViews: ->
+    $('#content').html('')
     view = new Tickets2.Views.UsersLogin({})
     view.render()
     if Tickets2.Vars.currentUser.get('role') == 'admin'

@@ -1,51 +1,30 @@
-class Tickets2.Models.User extends Backbone.Model
+class Tickets2.Models.User extends Tickets2.Models.Base
 
   urlRoot: '/users'
 
-  logout: ->
-    #this.restMethod('sign_out_ajax', 'POST', {}, nil, null)
+  externalSuccessHandler: ->
 
-    $.ajax 'users/sign_out_ajax',
-      type: 'POST'
-      async: false,
-      cache: false,
-      contentType: false,
-      processData: false,
-      error: (jqXHR, textStatus, errorThrown) ->
-      success: (data, textStatus, jqXHR) ->
-        Tickets2.setCurrentUser(null, null)
-        Tickets2.initViews()
+  logoutSuccess: ->
+    Tickets2.setCurrentUser(null, null)
+    Tickets2.initViews()
+
+  logout: ->
+    this.restMethod('sign_out_ajax', 'POST', this.logoutSuccess, null);
     return
 
+  loginSuccess: (data) ->
+    Tickets2.setCurrentUser(data.user_id, data.role)
+    if Tickets2.Vars.successHandler?
+      Tickets2.Vars.successHandler()
+      Tickets2.Vars.successHandler = null
+    Tickets2.initViews()
 
   login: (email, password, successHandler, errorHandler) ->
-    #this.restMethod('sign_out_ajax', 'POST', {}, nil, null)
-    $.ajax 'users/sign_in_ajax?email='+email+'&password='+password,
-      type: 'POST'
-      async: false,
-      cache: false,
-      contentType: false,
-      processData: false,
-      error: (jqXHR, textStatus, errorThrown) ->
-        errorHandler()
-      success: (data, textStatus, jqXHR) ->
-        Tickets2.setCurrentUser(data.user_id, data.role)
-        successHandler()
-        Tickets2.initViews()
+    Tickets2.Vars.successHandler = successHandler
+    this.restMethod('sign_in_ajax?email='+email+'&password='+password, 'POST', this.loginSuccess, errorHandler);
     return
 
   signup: (email, password, successHandler, errorHandler) ->
-    #this.restMethod('sign_out_ajax', 'POST', {}, nil, null)
-    $.ajax 'users/sign_up_ajax?email='+email+'&password='+password,
-      type: 'POST'
-      async: false,
-      cache: false,
-      contentType: false,
-      processData: false,
-      error: (jqXHR, textStatus, errorThrown) ->
-        errorHandler()
-      success: (data, textStatus, jqXHR) ->
-        Tickets2.setCurrentUser(data.user_id, data.role)
-        successHandler()
-        Tickets2.initViews()
+    Tickets2.Vars.successHandler = successHandler
+    this.restMethod('sign_up_ajax?email='+email+'&password='+password, 'POST', this.loginSuccess, errorHandler);
     return
