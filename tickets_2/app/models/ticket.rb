@@ -7,10 +7,4 @@ class TicketStatus
 end
 
 class Ticket < ApplicationRecord
-
-  def customer_email
-    customer = User.find(customer_id)
-    return customer.email
-  end
-
 end

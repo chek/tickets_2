@@ -4,6 +4,9 @@ class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def index
+    if current_user.blank?
+      return render json: {}, :status => 401
+    end
     if current_user.role == UserRole::CUSTOMER
       @tickets = Ticket.where('customer_id = ?', current_user.id).where('status not in (?)',[TicketStatus::DELETED]).order('created_at DESC')
     elsif current_user.role == UserRole::SUPPORT
@@ -43,17 +46,6 @@ class TicketsController < ApplicationController
     #support can close ticket
     elsif params[:status].to_i == TicketStatus::CLOSED and @ticket.agent_id == current_user.id
       @ticket.status = TicketStatus::CLOSED
-      @ticket.save
-      return render json: {ticket: @ticket}, :status => 200
-    else
-      return render json: {}, :status => 401
-    end
-  end
-
-  def update_process
-    @ticket = Ticket.find(params[:id])
-    if @ticket.agent_id == current_user.id
-      @ticket.status = TicketStatus::IN_PROCESS
       @ticket.save
       return render json: {ticket: @ticket}, :status => 200
     else

@@ -2,47 +2,46 @@ require 'test_helper'
 
 class TicketsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @user = users(:one)
+    @user_support = users(:two)
+    @user_customer = users(:three)
     @ticket = tickets(:one)
+    @ticket2 = tickets(:two)
   end
 
   test "should get index" do
-    get tickets_url
+    post '/users/sign_in_ajax', email: @user_support.email, password: 'qwer1234'
+    get '/tickets/list'
     assert_response :success
   end
 
-  test "should get new" do
-    get new_ticket_url
-    assert_response :success
+  test "should get index unauthorized " do
+    get '/tickets/list'
+    assert_response 401
   end
 
   test "should create ticket" do
-    assert_difference('Ticket.count') do
-      post tickets_url, params: { ticket: { agent_id: @ticket.agent_id, customer_id: @ticket.customer_id, description: @ticket.description, status: @ticket.status, subject: @ticket.subject } }
-    end
-
-    assert_redirected_to ticket_url(Ticket.last)
-  end
-
-  test "should show ticket" do
-    get ticket_url(@ticket)
+    post '/users/sign_in_ajax', email: @user_customer.email, password: 'qwer1234'
+    post '/tickets/create', subject: 'subject', description: 'description'
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_ticket_url(@ticket)
+  test "should not create ticket" do
+    post '/users/sign_in_ajax', email: @user_support.email, password: 'qwer1234'
+    post '/tickets/create', subject: 'subject', description: 'description'
+    assert_response 401
+  end
+
+  test "should update_ticket" do
+    post '/users/sign_in_ajax', email: @user_support.email, password: 'qwer1234'
+    patch '/tickets/update_ticket', id: @ticket.id, status: TicketStatus::IN_PROCESS
     assert_response :success
   end
 
-  test "should update ticket" do
-    patch ticket_url(@ticket), params: { ticket: { agent_id: @ticket.agent_id, customer_id: @ticket.customer_id, description: @ticket.description, status: @ticket.status, subject: @ticket.subject } }
-    assert_redirected_to ticket_url(@ticket)
+  test "should not update_ticket" do
+    post '/users/sign_in_ajax', email: @user_customer.email, password: 'qwer1234'
+    patch '/tickets/update_ticket', id: @ticket.id, status: TicketStatus::IN_PROCESS
+    assert_response 401
   end
 
-  test "should destroy ticket" do
-    assert_difference('Ticket.count', -1) do
-      delete ticket_url(@ticket)
-    end
-
-    assert_redirected_to tickets_url
-  end
 end
