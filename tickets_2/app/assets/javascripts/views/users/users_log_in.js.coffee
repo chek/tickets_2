@@ -118,21 +118,21 @@ class Tickets2.Views.UsersLogin extends Backbone.View
       $('#sign-up-container .password-confirm .help-block').show()
 
     if valid
-      Tickets2.Vars.currentUser.signup(emailAddress, $('#signUpInputPassword').val(), this.success, this.error)
+      Tickets2.Models.User.currentUser.signup(emailAddress, $('#signUpInputPassword').val(), this.success, this.error)
 
     return
 
   login: (e) ->
     e.preventDefault()
-    Tickets2.Vars.currentUser.login($('#inputEmail').val(), $('#inputPassword').val(), this.success, this.error)
+    Tickets2.Models.User.currentUser.login($('#inputEmail').val(), $('#inputPassword').val(), this.success, this.error)
     return
 
   logout: ->
-    Tickets2.Vars.currentUser.logout()
+    Tickets2.Models.User.currentUser.logout()
     return
 
   render: ->
-    if Tickets2.Vars.currentUser.get('id')?
+    if Tickets2.Models.User.currentUser.get('id')?
       this.$el.html(this.logoutTemplate())
     else
       this.$el.html(this.loginTemplate())

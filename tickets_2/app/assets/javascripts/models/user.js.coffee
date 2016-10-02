@@ -1,11 +1,19 @@
 class Tickets2.Models.User extends Tickets2.Models.Base
 
+  @currentUser: null
+
+  @setCurrentUser: (id, role) ->
+    Tickets2.Models.User.currentUser = new Tickets2.Models.User()
+    if id?
+      Tickets2.Models.User.currentUser.set('id', id)
+      Tickets2.Models.User.currentUser.set('role', role)
+
   urlRoot: '/users'
 
   externalSuccessHandler: ->
 
   logoutSuccess: ->
-    Tickets2.setCurrentUser(null, null)
+    Tickets2.Models.User.setCurrentUser(null, null)
     Tickets2.initViews()
 
   logout: ->
@@ -13,7 +21,7 @@ class Tickets2.Models.User extends Tickets2.Models.Base
     return
 
   loginSuccess: (data) ->
-    Tickets2.setCurrentUser(data.user_id, data.role)
+    Tickets2.Models.User.setCurrentUser(data.user_id, data.role)
     if Tickets2.Vars.successHandler?
       Tickets2.Vars.successHandler()
       Tickets2.Vars.successHandler = null
@@ -35,8 +43,8 @@ class Tickets2.Models.User extends Tickets2.Models.Base
 
 
   getCurrentUserSuccess: (data) ->
-    Tickets2.setCurrentUser(data.user_id, data.role)
+    Tickets2.Models.User.setCurrentUser(data.user_id, data.role)
 
   getCurrentUser: ->
-    this.restMethod('get_current_user', 'GET', this.getCurrentUserSuccess, null);
+    this.restMethod('get_current_user', 'GET', this.getCurrentUserSuccess, this.getCurrentUserSuccess);
     return
