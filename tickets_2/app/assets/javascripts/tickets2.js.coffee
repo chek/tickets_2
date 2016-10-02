@@ -12,7 +12,13 @@ window.Tickets2 =
     $('#content').html('')
     view = new Tickets2.Views.UsersLogin({})
     view.render()
-    if Tickets2.Models.User.currentUser.get('role') == 'admin'
+    if Tickets2.Models.User.currentUser.get('role') == Tickets2.Models.User.adminRole
+      usersView = new Tickets2.Views.UsersIndex({})
+      usersView.render()
+    if Tickets2.Models.User.currentUser.get('role') == Tickets2.Models.User.supportRole
+      usersView = new Tickets2.Views.UsersIndex({})
+      usersView.render()
+    if Tickets2.Models.User.currentUser.get('role') == Tickets2.Models.User.customerRole
       usersView = new Tickets2.Views.UsersIndex({})
       usersView.render()
 

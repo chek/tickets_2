@@ -19,9 +19,9 @@ class Tickets2.Views.UserListItem extends Backbone.View
                                         <label for='inputPassword' class='control-label'>Role</label>
 
                                         <select class='form-control roles-list'>
-                                          <option value='admin' <%= role == 'admin' ? 'selected' : '' %>>admin</option>
-                                          <option value='support' <%= role == 'support' ? 'selected' : '' %>>support</option>
-                                          <option value='customer' <%= role == 'customer' ? 'selected' : '' %>>customer</option>
+                                          <option value='admin' <%= role == Tickets2.Models.User.adminRole ? 'selected' : '' %>>admin</option>
+                                          <option value='support' <%= role == Tickets2.Models.User.supportRole ? 'selected' : '' %>>support</option>
+                                          <option value='customer' <%= role == Tickets2.Models.User.customerRole ? 'selected' : '' %>>customer</option>
                                         </select>
 
 

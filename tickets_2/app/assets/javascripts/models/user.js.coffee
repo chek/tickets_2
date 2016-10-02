@@ -1,5 +1,9 @@
 class Tickets2.Models.User extends Tickets2.Models.Base
 
+  @adminRole: 'admin'
+  @supportRole: 'support'
+  @customerRole: 'customer'
+
   @currentUser: null
 
   @setCurrentUser: (id, role) ->
