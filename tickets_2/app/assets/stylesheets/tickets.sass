@@ -1,2 +1,27 @@
 .create-ticket-btn
   margin-right: 5px
+ul.tickets
+  width: 300px
+  margin: 0 auto
+  li
+    height: 27px
+    line-height: 27px
+    margin-bottom: 5px
+    .subject
+      width: 22%
+      text-align: left
+      float: left
+    .description
+      //float: left
+      display: inline-block
+      width: 40%
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
+
+    .status
+      float: left
+      margin-right: 5px
+      width: 50px
+    > .btn
+      float: right

@@ -1,6 +1,6 @@
 class Tickets2.Views.TicketListItem extends Backbone.View
 
-  template: _.template("<span class='subject'><%- subject %></span><span class='description'><%- description %></span><span class='description'><%- Tickets2.Models.Ticket.statusLabel(status) %></span><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>'>edit</button>
+  template: _.template("<span class='status'><%- Tickets2.Models.Ticket.statusLabel(status) %></span><span class='subject'><%- subject %></span><span class='description'><%- description %></span><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>'>edit</button>
                                <div class='modal fade modal-form <%- id %>' tabindex='-1' role='dialog' aria-labelledby='mySmallModalLabel' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
