@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :check_current_user_admin, only: [:index, :update_role]
+  before_action :current_user_admin?, only: [:index, :update_role]
 
   # GET /users
   # GET /users.json
@@ -58,7 +58,7 @@ class UsersController < ApplicationController
   end
 
   private
-    def check_current_user_admin
+    def current_user_admin?
       if current_user.blank? or current_user.role != UserRole::ADMIN
         return render json: {}, :status => 401
       end
