@@ -13,7 +13,6 @@ class Tickets2.Views.TicketsIndex extends Backbone.View
     Tickets2.Vars.tickets = new Tickets2.Collections.Tickets()
     this.listenTo(Tickets2.Vars.tickets, 'add', this.addOne);
     this.listenTo(Tickets2.Vars.tickets, 'reset', this.addAll);
-    this.on('remove', this.render);
 
   render: ->
     Tickets2.Vars.tickets.fetch({reset: true})
