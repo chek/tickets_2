@@ -1,3 +1,9 @@
+class UserRole
+  ADMIN = 'admin'
+  SUPPORT = 'support'
+  CUSTOMER = 'customer'
+end
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

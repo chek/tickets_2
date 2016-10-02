@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   def sign_up_ajax
     @user = User.where('email = ?', params[:email]).first
     if @user.blank?
-      @user = User.new(:email => params[:email], :password => params[:password], :password_confirmation => params[:password])
+      @user = User.new(:email => params[:email], :password => params[:password], :password_confirmation => params[:password], :role => UserRole::CUSTOMER)
       @user.save
       return render json: {user_id: @user.id}, :status => 200
     else

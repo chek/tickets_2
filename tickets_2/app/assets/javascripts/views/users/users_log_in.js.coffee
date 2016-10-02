@@ -1,8 +1,8 @@
 class Tickets2.Views.UsersLogin extends Backbone.View
 
-  logoutTemplate: _.template("<button type='button' class='btn logout btn-primary'>Log out</button>")
+  logoutTemplate: _.template("<button type='button' class='btn logout btn-primary'>Sign out</button>")
 
-  loginTemplate: _.template("<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-sm'>Log in</button>
+  loginTemplate: _.template("<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-sm'>Sign in</button>
                             <div id='login-container' class='modal fade bd-example-modal-sm' tabindex='-1' role='dialog' aria-labelledby='mySmallModalLabel' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
@@ -10,7 +10,7 @@ class Tickets2.Views.UsersLogin extends Backbone.View
                                     <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
                                       <span aria-hidden='true'>×</span>
                                     </button>
-                                    <h4 class='modal-title' id='mySmallModalLabel'>Log in</h4>
+                                    <h4 class='modal-title' id='mySmallModalLabel'>Sign in</h4>
                                   </div>
                                   <div class='modal-body'>
                                     <form data-toggle='validator' role='form'>
