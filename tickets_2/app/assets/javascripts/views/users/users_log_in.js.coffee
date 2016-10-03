@@ -137,5 +137,5 @@ class Tickets2.Views.UsersLogin extends Backbone.View
     else
       this.$el.html(this.loginTemplate())
       this.$el.append(this.signUpTemplate())
-    $('#log_in_out').html(this.$el)
+    $('#header').html(this.$el)
     return this
