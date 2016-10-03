@@ -17,6 +17,8 @@ window.Tickets2 =
       usersView.render()
     if Tickets2.Models.User.currentUser.get('role') == Tickets2.Models.User.supportRole
       Tickets2.Views.TicketsIndex.render()
+      reportNavigationView = new Tickets2.Views.ReportNavigation({})
+      reportNavigationView.render()
     if Tickets2.Models.User.currentUser.get('role') == Tickets2.Models.User.customerRole
       createTicketView = new Tickets2.Views.CreateTicket({})
       createTicketView.render()
