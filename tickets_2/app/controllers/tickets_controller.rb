@@ -10,7 +10,11 @@ class TicketsController < ApplicationController
     if current_user.role == UserRole::CUSTOMER
       @tickets = Ticket.where('customer_id = ?', current_user.id).where('status not in (?)',[TicketStatus::DELETED]).order('created_at DESC')
     elsif current_user.role == UserRole::SUPPORT
-      @tickets = Ticket.where('agent_id = ?', current_user.id).where('status not in (?)',[TicketStatus::DELETED, TicketStatus::CLOSED]).order('created_at DESC')
+      if !params[:report].blank?
+        @tickets = Ticket.where('agent_id = ?', current_user.id).where('status in (?)',[TicketStatus::CLOSED]).where('updated_at BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()').order('created_at DESC')
+      else
+        @tickets = Ticket.where('agent_id = ?', current_user.id).where('status not in (?)',[TicketStatus::DELETED, TicketStatus::CLOSED]).order('created_at DESC')
+      end
     end
     customers_ids = @tickets.map{|ticket| ticket.customer_id}
     @customers = User.where('id in (?)', customers_ids)
