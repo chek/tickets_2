@@ -28,6 +28,8 @@ window.Tickets2 =
       createTicketView = new Tickets2.Views.CreateTicket({})
       createTicketView.render()
       Tickets2.Views.TicketsIndex.render()
+    else
+      $('#content').html('<h1>Welcome to simple tickets</h1>')
 
 
 $(document).ready ->
