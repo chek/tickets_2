@@ -4,7 +4,7 @@ class Tickets2.Views.TicketListItem extends Backbone.View
                             <span class='subject'><%- subject %></span>
                             <span class='description'><%- description %></span>
                             <button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>_edit'>open</button>
-                            <button type='button' class='btn delete-btn btn-primary btn-sm <%- Tickets2.Models.Ticket.closedStatus == status ? 'disabled' : '' %>' data-toggle='modal' data-target='.<%- id %>_delete'>delete</button>
+                            <button type='button' class='btn delete-btn btn-primary btn-sm <%- Tickets2.Models.Ticket.closedStatus == status ? 'disabled' : '' %>' data-toggle='modal' data-target='.<%- Tickets2.Models.Ticket.closedStatus != status ? id : '' %>_delete'>delete</button>
                             <div class='modal fade modal-form <%- id %>_edit' tabindex='-1' role='dialog' aria-labelledby='modal-label' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
