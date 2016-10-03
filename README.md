@@ -8,21 +8,29 @@
 
   * MySQL server
   
-  * Change database name and credentials in config/database.yml
-
-  * Create database tables using: rake db:schema:load
+  * Change credentials for database in config/database.yml
   
-  * Fill initial data using: rails db:seed
+  * Create database steps:
+    
+    * mysql -u root -p
+    
+    * CREATE DATABASE `tickets` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    
+    * CREATE DATABASE `tickets_test` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    
+    * exit
+
+    * rake db:schema:load
+  
+    * rails db:seed
   
   * Install gems: bundle install
-  
-  * Project using backbone library which will be installed during bundle install
 
   * To run project: rails s
 
   * To run backend tests: rails test
   
-  * To run client side test open in browser http://localhost:3000/specs
+  * To run client side tests open in browser http://localhost:3000/specs
 
 ## Logic of the system   
 
