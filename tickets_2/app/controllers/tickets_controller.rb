@@ -4,7 +4,7 @@ class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def index
-    if current_user.blank?
+    if current_user.blank? or current_user.role == UserRole::ADMIN
       return render json: {}, :status => 401
     end
     if current_user.role == UserRole::CUSTOMER
