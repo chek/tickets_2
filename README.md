@@ -22,7 +22,7 @@
 
   * To run backend tests: rails test
   
-  * To run client side test: bundle exec rake spec:javascript
+  * To run client side test open in browser http://localhost:3000/specs
 
 ## Logic of the system   
 
