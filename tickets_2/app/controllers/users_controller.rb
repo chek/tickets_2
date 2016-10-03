@@ -10,57 +10,77 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.where('email != ?', current_user.email)
-    return render json: {users: @users}, :status => 200
+    begin
+      @users = User.where('email != ?', current_user.email)
+      return render json: {users: @users}, :status => 200
+    rescue
+      return render json: {}, :status => 500
+    end
   end
 
   # POST /users/update_role
   def update_role
-    @user = User.find(params[:id])
-    if !@user.blank?
-      @user.role = params[:role]
-      @user.save
-      return render json: {user: @user}, :status => 200
-    else
-      return render json: {user: @user}, :status => 404
+    begin
+      @user = User.find(params[:id])
+      if !@user.blank?
+        @user.role = params[:role]
+        @user.save
+        return render json: {user: @user}, :status => 200
+      else
+        return render json: {user: @user}, :status => 404
+      end
+    rescue
+      return render json: {}, :status => 500
     end
   end
 
   # POST /users/sign_up_ajax
   def sign_up_ajax
-    @user = User.where('email = ?', params[:email]).first
-    if @user.blank?
-      @user = User.new(:email => params[:email], :password => params[:password], :password_confirmation => params[:password], :role => UserRole::CUSTOMER)
-      @user.save
-      sign_in(:user, @user)
-      return render json: {user_id: @user.id, role: @user.role}, :status => 200
-    else
-      return render json: nil, :status => 406
+    begin
+      @user = User.where('email = ?', params[:email]).first
+      if @user.blank?
+        @user = User.new(:email => params[:email], :password => params[:password], :password_confirmation => params[:password], :role => UserRole::CUSTOMER)
+        @user.save
+        sign_in(:user, @user)
+        return render json: {user_id: @user.id, role: @user.role}, :status => 200
+      else
+        return render json: nil, :status => 406
+      end
+    rescue
+      return render json: {}, :status => 500
     end
   end
 
   # POST /users/sign_in_ajax
   def sign_in_ajax
-    @user = User.where('email = ?', params[:email]).first
-    if !@user.blank?
-      if @user.valid_password?(params[:password])
-        sign_in(:user, @user)
-        return render json: {user_id: @user.id, role: @user.role}, :status => 200
+    begin
+      @user = User.where('email = ?', params[:email]).first
+      if !@user.blank?
+        if @user.valid_password?(params[:password])
+          sign_in(:user, @user)
+          return render json: {user_id: @user.id, role: @user.role}, :status => 200
+        else
+          return render json: nil, :status => 401
+        end
       else
-        return render json: nil, :status => 401
+        return render json: nil, :status => 404
       end
-    else
-      return render json: nil, :status => 404
+    rescue
+      return render json: {}, :status => 500
     end
   end
 
   # POST /users/sign_out_ajax
   def sign_out_ajax
-    if !current_user.blank?
-      sign_out(current_user)
-      return render json: nil, :status => 200
-    else
-      return render json: nil, :status => 404
+    begin
+      if !current_user.blank?
+        sign_out(current_user)
+        return render json: nil, :status => 200
+      else
+        return render json: nil, :status => 404
+      end
+    rescue
+      return render json: {}, :status => 500
     end
   end
 
