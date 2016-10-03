@@ -29,7 +29,7 @@
           width: 28%
       .description
         display: inline-block
-        width: 37%
+        width: 30%
         overflow: hidden
         text-overflow: ellipsis
         white-space: nowrap
@@ -37,6 +37,13 @@
           display: none
       .email
         float: right
+        display: inline-block
+        overflow: hidden
+        width: 30%
+        text-overflow: ellipsis
+        white-space: nowrap
+        @media only screen and (max-width: 580px)
+          width: 40%
       .status
         float: left
         margin-right: 5px
