@@ -16,7 +16,7 @@ class Tickets2.Models.User extends Tickets2.Models.Base
 
   logoutSuccess: ->
     Tickets2.Models.User.setCurrentUser(null, null)
-    if !Tickets2.Vars.testEnv
+    if !Tickets2.isTestEnv()
       Tickets2.initViews()
 
   logout: ->
@@ -28,7 +28,7 @@ class Tickets2.Models.User extends Tickets2.Models.Base
     if Tickets2.Vars.successHandler?
       Tickets2.Vars.successHandler()
       Tickets2.Vars.successHandler = null
-    if !Tickets2.Vars.testEnv
+    if !Tickets2.isTestEnv()
       Tickets2.initViews()
 
   login: (email, password, successHandler, errorHandler) ->

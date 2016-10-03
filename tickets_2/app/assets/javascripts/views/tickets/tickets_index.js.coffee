@@ -39,6 +39,7 @@ class Tickets2.Views.TicketsIndex extends Backbone.View
     header = "<li><h5 class='status'>Status</h5>
         <h5 class='subject'>Subject</h5>
         <h5 class='description'>Description</h5></li>"
-    this.$list.append(header);
-    if Tickets2.Vars.tickets?
-      Tickets2.Vars.tickets.each(this.addOne, this);
+    if !Tickets2.isTestEnv()
+      this.$list.append(header);
+      if Tickets2.Vars.tickets?
+        Tickets2.Vars.tickets.each(this.addOne, this);

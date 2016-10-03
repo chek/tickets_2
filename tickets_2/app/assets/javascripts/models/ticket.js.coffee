@@ -28,7 +28,7 @@ class Tickets2.Models.Ticket extends Tickets2.Models.Base
   ticketCreated: (data) ->
     ticket = new Tickets2.Models.Ticket(data.ticket);
     Tickets2.Vars.tickets.add(ticket)
-    if !Tickets2.Vars.testEnv
+    if !Tickets2.isTestEnv()
       Tickets2.Views.TicketsIndex.render()
     return
 

@@ -1,16 +1,23 @@
 //= require models/user
 describe('User', function() {
-    it("setCurrentUser", function() {
+    beforeEach(function() {
         Tickets2.Models.User.setCurrentUser(null, null);
+    })
+    it("setCurrentUser", function() {
         expect(Tickets2.Models.User.currentUser).not.toBe(null);
         expect(Tickets2.Models.User.currentUser.get('id')).toBe(undefined);
     });
     it("getCurrentUser", function() {
-         Tickets2.Models.User.currentUser.getCurrentUser()
-         var data = {user_id: 8, role: "support"};
          spyOn( $, 'ajax' ).and.callFake( function (url, params) {
-            params.success(data);
+             var data = MockHelper.mock(url, params);
+             if (typeof url == 'object') {
+                 url.success(data)
+             } else if (typeof params == 'object') {
+
+                 params.success(data)
+             }
          });
+         Tickets2.Models.User.currentUser.getCurrentUser()
          expect(Tickets2.Models.User.currentUser).not.toBe(null);
          expect(Tickets2.Models.User.currentUser.get('id')).toBe(8);
     });
