@@ -17,7 +17,7 @@
 //= require bootstrap
 //= require underscore
 //= require backbone
-//= require tickets2
+//= require tickets
 //= require_tree ../templates
 //= require_tree ./models
 //= require_tree ./collections
