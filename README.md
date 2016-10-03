@@ -35,9 +35,11 @@
     * rails s
    
     * open in browser http://localhost:3000/specs
+    
 ## Test using
   
   From seed data in system exist 6 users admin@test.com, support@test.com, support1@test.com, customer@test.com, customer1@test.com, customer2@test.com. Each of them has same password 'qwer1234'. Also you can register other user and assign him role from admin@test.com user
+  
 ## Logic of the system   
 
   For system like explained in requirements, enough 2 logical entities (Users and Tickets).
