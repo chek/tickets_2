@@ -18,12 +18,14 @@ window.Tickets2 =
     view = new Tickets2.Views.UsersLogin({})
     view.render()
     if Tickets2.Models.User.currentUser.get('role') == Tickets2.Models.User.adminRole
+      ticketstNavigationView = new Tickets2.Views.TicketsNavigation({})
+      ticketstNavigationView.render()
       usersView = new Tickets2.Views.UsersIndex({})
       usersView.render()
     else if Tickets2.Models.User.currentUser.get('role') == Tickets2.Models.User.supportRole
-      Tickets2.Views.TicketsIndex.render()
       reportNavigationView = new Tickets2.Views.ReportNavigation({})
       reportNavigationView.render()
+      Tickets2.Views.TicketsIndex.render()
     else if Tickets2.Models.User.currentUser.get('role') == Tickets2.Models.User.customerRole
       createTicketView = new Tickets2.Views.CreateTicket({})
       createTicketView.render()

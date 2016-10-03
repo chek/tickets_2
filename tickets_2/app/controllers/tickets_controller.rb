@@ -5,7 +5,7 @@ class TicketsController < ApplicationController
   # GET /tickets.json
   def index
     begin
-      if current_user.blank? or current_user.role == UserRole::ADMIN
+      if current_user.blank?
         return render json: {}, :status => 401
       end
       if current_user.role == UserRole::CUSTOMER
@@ -16,6 +16,8 @@ class TicketsController < ApplicationController
         else
           @tickets = Ticket.where('agent_id = ?', current_user.id).where('status not in (?)',[TicketStatus::DELETED, TicketStatus::CLOSED]).order('created_at DESC')
         end
+      elsif current_user.role == UserRole::ADMIN
+        @tickets = Ticket.where('status not in (?)',[TicketStatus::DELETED]).order('created_at DESC')
       end
       customers_ids = @tickets.map{|ticket| ticket.customer_id}
       @customers = User.where('id in (?)', customers_ids)
