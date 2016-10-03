@@ -26,5 +26,10 @@ window.Tickets2 =
 
 
 $(document).ready ->
-  Tickets2.initialize()
+  #this var need for testing
+  Tickets2.Vars.testEnv = false
+  if window.location.href == 'http://localhost:3000/specs'
+    Tickets2.Vars.testEnv = true
+  if !Tickets2.Vars.testEnv
+    Tickets2.initialize()
 

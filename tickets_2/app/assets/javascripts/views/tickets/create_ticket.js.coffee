@@ -51,7 +51,7 @@ class Tickets2.Views.CreateTicket extends Backbone.View
       $('#ticket-subject').val('')
       $('#ticket-description').val('')
       ticket = new Tickets2.Models.Ticket()
-      ticket.create(subject, description, null, null)
+      ticket.create(subject, description)
       $('#create-ticket-container').modal('hide')
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();

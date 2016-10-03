@@ -28,11 +28,12 @@ class Tickets2.Models.Ticket extends Tickets2.Models.Base
   ticketCreated: (data) ->
     ticket = new Tickets2.Models.Ticket(data.ticket);
     Tickets2.Vars.tickets.add(ticket)
-    Tickets2.Views.TicketsIndex.render()
+    if !Tickets2.Vars.testEnv
+      Tickets2.Views.TicketsIndex.render()
     return
 
-  create: (subject, description, successHandler, errorHandler) ->
-    this.restMethod('create?subject='+subject+'&description='+description, 'POST', this.ticketCreated, errorHandler)
+  create: (subject, description) ->
+    this.restMethod('create?subject='+subject+'&description='+description, 'POST', this.ticketCreated, null)
     return
 
   refreshTickets: ->
