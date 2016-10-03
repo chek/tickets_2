@@ -5,7 +5,7 @@ class Tickets2.Views.TicketListItem extends Backbone.View
                             <span class='description'><%- description %></span>
                             <button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>_edit'>open</button>
                             <button type='button' class='btn delete-btn btn-primary btn-sm <%- Tickets2.Models.Ticket.closedStatus == status ? 'disabled' : '' %>' data-toggle='modal' data-target='.<%- Tickets2.Models.Ticket.closedStatus != status ? id : '' %>_delete'>delete</button>
-                            <div class='modal fade modal-form <%- id %>_edit' tabindex='-1' role='dialog' aria-labelledby='modal-label' aria-hidden='true'>
+                            <div class='modal fade edit modal-form <%- id %>_edit' tabindex='-1' role='dialog' aria-labelledby='modal-label' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
                                   <div class='modal-header'>
@@ -58,6 +58,7 @@ class Tickets2.Views.TicketListItem extends Backbone.View
 
   events: {
     'click button.confirm-delete': 'deleteTicket',
+    'click button.confirm-close': 'confirmTicket',
   }
 
   deleteTicket: (e) ->
@@ -69,6 +70,19 @@ class Tickets2.Views.TicketListItem extends Backbone.View
     $('.modal-backdrop').remove();
     return
 
+  confirmTicket: (e) ->
+    e.preventDefault()
+    nextStatus = Tickets2.Models.Ticket.confirmedStatus
+    this.model.update(nextStatus)
+    $('.edit.modal-form', this.$el).modal('hide')
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+    return
+
   render: ->
     this.$el.html(this.template(this.model.toJSON()))
+    if Tickets2.Models.Ticket.closedStatus == this.model.get('status')
+      editDialog = $('.' + this.model.get('id') + '_edit', this.$el)
+      form = $('form', editDialog)
+      form.append("<div class='form-group'><button class='btn confirm-close btn-primary'>Confirm</button></div>")
     return this

@@ -84,11 +84,4 @@ class UsersController < ApplicationController
     end
   end
 
-  private
-    def current_user_admin?
-      if current_user.blank? or current_user.role != UserRole::ADMIN
-        return render json: {}, :status => 401
-      end
-    end
-
 end

@@ -9,15 +9,15 @@ class TicketsController < ApplicationController
         return render json: {}, :status => 401
       end
       if current_user.role == UserRole::CUSTOMER
-        @tickets = Ticket.where('customer_id = ?', current_user.id).where('status not in (?)',[TicketStatus::DELETED]).order('created_at DESC')
+        @tickets = Ticket.where('customer_id = ?', current_user.id).where('status not in (?)',[TicketStatus::DELETED,TicketStatus::CONFIRMED]).order('created_at DESC')
       elsif current_user.role == UserRole::SUPPORT
         if !params[:report].blank?
-          @tickets = Ticket.where('agent_id = ?', current_user.id).where('status in (?)',[TicketStatus::CLOSED]).where('updated_at BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()').order('created_at DESC')
+          @tickets = Ticket.where('agent_id = ?', current_user.id).where('status in (?)',[TicketStatus::CLOSED,TicketStatus::CONFIRMED]).where('updated_at BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()').order('created_at DESC')
         else
-          @tickets = Ticket.where('agent_id = ?', current_user.id).where('status not in (?)',[TicketStatus::DELETED, TicketStatus::CLOSED]).order('created_at DESC')
+          @tickets = Ticket.where('agent_id = ?', current_user.id).where('status not in (?)',[TicketStatus::DELETED, TicketStatus::CLOSED, TicketStatus::CONFIRMED]).order('created_at DESC')
         end
       elsif current_user.role == UserRole::ADMIN
-        @tickets = Ticket.where('status not in (?)',[TicketStatus::DELETED]).order('created_at DESC')
+        @tickets = Ticket.where('status not in (?)',[TicketStatus::DELETED, TicketStatus::CLOSED, TicketStatus::CONFIRMED]).order('created_at DESC')
       end
       customers_ids = @tickets.map{|ticket| ticket.customer_id}
       @customers = User.where('id in (?)', customers_ids)
@@ -48,19 +48,26 @@ class TicketsController < ApplicationController
   def update_ticket
     begin
       @ticket = Ticket.find(params[:id])
-      #customer can only delete ticket
-      if params[:status].to_i == TicketStatus::DELETED and @ticket.customer_id == current_user.id
-        @ticket.status = TicketStatus::DELETED
-        @ticket.save
-        return render json: {ticket: @ticket}, :status => 200
+      next_status = params[:status].to_i
+      valid = false
+      #customer can only delete or confirm ticket
+      if TicketStatus::DELETED == next_status and [TicketStatus::IN_PROCESS, TicketStatus::NEW].include?(@ticket.status) and @ticket.customer_id == current_user.id
+        valid = true
+      #customer can only delete or confirm ticket
+      elsif TicketStatus::CONFIRMED == next_status and [TicketStatus::CLOSED].include?(@ticket.status) and @ticket.customer_id == current_user.id
+        valid = true
       #support can process ticket
-      elsif params[:status].to_i == TicketStatus::IN_PROCESS and @ticket.agent_id == current_user.id
-        @ticket.status = TicketStatus::IN_PROCESS
-        @ticket.save
-        return render json: {ticket: @ticket}, :status => 200
+      elsif next_status == TicketStatus::IN_PROCESS and [TicketStatus::NEW].include?(@ticket.status) and @ticket.agent_id == current_user.id
+        valid = true
       #support can close ticket
-      elsif params[:status].to_i == TicketStatus::CLOSED and @ticket.agent_id == current_user.id
-        @ticket.status = TicketStatus::CLOSED
+      elsif next_status == TicketStatus::CLOSED and [TicketStatus::IN_PROCESS].include?(@ticket.status) and @ticket.agent_id == current_user.id
+        valid = true
+      #admin can delete any ticket
+      elsif TicketStatus::DELETED == next_status and current_user.role == UserRole::ADMIN
+        valid = true
+      end
+      if valid
+        @ticket.status = next_status
         @ticket.save
         return render json: {ticket: @ticket}, :status => 200
       else
@@ -68,13 +75,6 @@ class TicketsController < ApplicationController
       end
     rescue
       return render json: {}, :status => 500
-    end
-  end
-
-  private
-  def current_user_customer?
-    if current_user.blank? or current_user.role != UserRole::CUSTOMER
-      return render json: {}, :status => 401
     end
   end
 end

@@ -1,9 +1,11 @@
 class Tickets2.Models.Ticket extends Tickets2.Models.Base
-  #tickets statuses, search 1475436409
+
   @newStatus: 0
   @inProcessStatus: 1
   @closedStatus: 2
+  @confirmedStatus: 3
   @deletedStatus: 4
+  #tickets statuses, search 1475436409
 
   @ticketToDelete: null
 
@@ -12,16 +14,10 @@ class Tickets2.Models.Ticket extends Tickets2.Models.Base
       return 'new'
     if status == Tickets2.Models.Ticket.inProcessStatus
       return 'in process'
+    if status == Tickets2.Models.Ticket.confirmedStatus
+      return 'confirmed'
     if status == Tickets2.Models.Ticket.closedStatus
       return 'closed'
-
-  @submitLabel: (status) ->
-    if status == Tickets2.Models.Ticket.newStatus
-      return 'Create'
-    if status == Tickets2.Models.Ticket.inProcessStatus
-      return 'Close'
-    if status == Tickets2.Models.Ticket.closedStatus
-      return 'Confirm'
 
   urlRoot: '/tickets'
 
