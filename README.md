@@ -30,7 +30,11 @@
 
   * To run backend tests: rails test
   
-  * To run client side tests open in browser http://localhost:3000/specs
+  * To run client side tests:
+  
+    * rails s
+   
+    * open in browser http://localhost:3000/specs
 
 ## Logic of the system   
 
@@ -42,3 +46,5 @@
   When Support Agent get new Ticket need set up to 'in process' state. 
   After finishing support issue Support Agent must set up it to 'closed' state.
   Customer can set up Ticket to 'deleted' state all the time until it closed.
+
+### RSPEC was required but i've done the tests with Minitest
