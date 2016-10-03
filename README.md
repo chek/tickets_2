@@ -47,4 +47,4 @@
   After finishing support issue Support Agent must set up it to 'closed' state.
   Customer can set up Ticket to 'deleted' state all the time until it closed.
 
-### RSPEC was required but i've done the tests with Minitest
+#### RSPEC was required but i've done the tests with built-in Rails tests
