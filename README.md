@@ -60,6 +60,6 @@
 
   * I have few issues with default bootstrap behavior of modal forms, so i fixed it with custom JS
   
-  * It was some issue with Jasmine test related to AJAX requests. I tried to fix it with mock-ajax.js library, but unsuccesseful. And fixed it with spyOn( $, 'ajax' ) method.
+  * It was some issue with Jasmine test related to AJAX requests. I tried to fix it with mock-ajax.js library, but unsuccesseful. And fixed it with spyOn( $, 'ajax' ) method. Few months ago i successufully used for this purpose jquery.mockjax.js but remembered it after done the task
 
 
