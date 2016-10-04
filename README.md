@@ -36,6 +36,8 @@
    
     * open in browser http://localhost:3000/specs
     
+### Client-side app is in Code/app/assets    
+    
 ## Test using
   
   From seed data in system exist 3 users admin@test.com, support@test.com, customer@test.com. Each of them has same password 'qwer1234'. Also you can register other user and assign him role from admin@test.com user
