@@ -9,13 +9,10 @@
 
 admin = User.create(:email => 'admin@test.com', :password => 'qwer1234', :password_confirmation => 'qwer1234', :role => UserRole::ADMIN)
 support = User.create(:email => 'support@test.com', :password => 'qwer1234', :password_confirmation => 'qwer1234', :role => UserRole::SUPPORT)
-support1 = User.create(:email => 'support1@test.com', :password => 'qwer1234', :password_confirmation => 'qwer1234', :role => UserRole::SUPPORT)
 customer = User.create(:email => 'customer@test.com', :password => 'qwer1234', :password_confirmation => 'qwer1234', :role => UserRole::CUSTOMER)
-customer1 = User.create(:email => 'customer1@test.com', :password => 'qwer1234', :password_confirmation => 'qwer1234', :role => UserRole::CUSTOMER)
-customer2 = User.create(:email => 'customer2@test.com', :password => 'qwer1234', :password_confirmation => 'qwer1234', :role => UserRole::CUSTOMER)
 
 Ticket.create(:subject => "Thank you. Support.", :description => "I thankful for solving my issue.", :customer_id => customer.id, :agent_id => support.id, :status => TicketStatus::CLOSED)
-Ticket.create(:subject => "Please help me.", :description => "I can't generate my report for whole month but in my plan i have this ability.", :customer_id => customer1.id, :agent_id => support1.id, :status => TicketStatus::NEW)
-Ticket.create(:subject => "Refund.", :description => "I want downgrade my plan and want to refund", :customer_id => customer2.id, :agent_id => support.id, :status => TicketStatus::IN_PROCESS)
-Ticket.create(:subject => "Whats wrong? ", :description => "I upgraded to Bussiness plan, but in my profile appear i have free account", :customer_id => customer.id, :agent_id => support1.id, :status => TicketStatus::IN_PROCESS)
-Ticket.create(:subject => "I have email issue", :description => "Each email from your system i got twice. Can you don't spam me?", :customer_id => customer1.id, :agent_id => support.id, :status => TicketStatus::NEW)
+Ticket.create(:subject => "Please help me.", :description => "I can't generate my report for whole month but in my plan i have this ability.", :customer_id => customer.id, :agent_id => support.id, :status => TicketStatus::NEW)
+Ticket.create(:subject => "Refund.", :description => "I want downgrade my plan and want to refund", :customer_id => customer.id, :agent_id => support.id, :status => TicketStatus::IN_PROCESS)
+Ticket.create(:subject => "Whats wrong? ", :description => "I upgraded to Bussiness plan, but in my profile appear i have free account", :customer_id => customer.id, :agent_id => support.id, :status => TicketStatus::IN_PROCESS)
+Ticket.create(:subject => "I have email issue", :description => "Each email from your system i got twice. Can you don't spam me?", :customer_id => customer.id, :agent_id => support.id, :status => TicketStatus::NEW)
