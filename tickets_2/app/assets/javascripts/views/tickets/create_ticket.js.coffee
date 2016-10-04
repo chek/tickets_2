@@ -1,6 +1,9 @@
-class Tickets2.Views.CreateTicket extends Backbone.View
+class Tickets2.Views.CreateTicket extends Tickets2.Views.Base
   template: _.template("<button type='button' class='btn create-ticket-btn btn-primary' data-toggle='modal' data-target='.create-ticket-container'>Create ticket</button>
-                            <div id='create-ticket-container' class='modal fade create-ticket-container' tabindex='-1' role='dialog' aria-labelledby='create-ticket-label' aria-hidden='true'>
+                            <%
+                            // create dlg
+                            %>
+                            <div id='create-ticket-container' class='modal modal-form fade create-ticket-container' tabindex='-1' role='dialog' aria-labelledby='create-ticket-label' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
                                   <div class='modal-header'>
@@ -52,9 +55,7 @@ class Tickets2.Views.CreateTicket extends Backbone.View
       $('#ticket-description').val('')
       ticket = new Tickets2.Models.Ticket()
       ticket.create(subject, description)
-      $('#create-ticket-container').modal('hide')
-      $('body').removeClass('modal-open');
-      $('.modal-backdrop').remove();
+      this.closeModal()
     else
       $('#create-ticket-container .help-inline').show()
     return

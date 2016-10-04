@@ -1,10 +1,19 @@
-class Tickets2.Views.TicketListItem extends Backbone.View
+class Tickets2.Views.TicketListItem extends Tickets2.Views.Base
 
   template: _.template("<span class='status'><%- Tickets2.Models.Ticket.statusLabel(status) %></span>
                             <span class='subject'><%- subject %></span>
                             <span class='description'><%- description %></span>
+                            <%
+                            // open btn
+                            %>
                             <button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>_edit'>open</button>
+                            <%
+                            // delete btn
+                            %>
                             <button type='button' class='btn delete-btn btn-primary btn-sm <%- Tickets2.Models.Ticket.closedStatus == status ? 'disabled' : '' %>' data-toggle='modal' data-target='.<%- Tickets2.Models.Ticket.closedStatus != status ? id : '' %>_delete'>delete</button>
+                            <%
+                            // open dlg
+                            %>
                             <div class='modal fade edit modal-form <%- id %>_edit' tabindex='-1' role='dialog' aria-labelledby='modal-label' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
@@ -31,6 +40,9 @@ class Tickets2.Views.TicketListItem extends Backbone.View
                                 </div>
                               </div>
                             </div>
+                            <%
+                            // delete dlg
+                            %>
                             <div class='modal fade delete modal-form <%- id %>_delete' tabindex='-1' role='dialog' aria-labelledby='modal-label' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
@@ -65,18 +77,14 @@ class Tickets2.Views.TicketListItem extends Backbone.View
     e.preventDefault()
     nextStatus = Tickets2.Models.Ticket.deletedStatus
     this.model.update(nextStatus)
-    $('.delete.modal-form', this.$el).modal('hide')
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
+    this.closeModal()
     return
 
   confirmTicket: (e) ->
     e.preventDefault()
     nextStatus = Tickets2.Models.Ticket.confirmedStatus
     this.model.update(nextStatus)
-    $('.edit.modal-form', this.$el).modal('hide')
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
+    this.closeModal()
     return
 
   render: ->
@@ -84,7 +92,6 @@ class Tickets2.Views.TicketListItem extends Backbone.View
       this.$el.html(this.template(this.model.toJSON()))
     catch error
       console.log error
-    finally
     if Tickets2.Models.Ticket.closedStatus == this.model.get('status')
       editDialog = $('.' + this.model.get('id') + '_edit', this.$el)
       form = $('form', editDialog)

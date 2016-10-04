@@ -1,4 +1,4 @@
-class Tickets2.Views.ReportTicketListItem extends Backbone.View
+class Tickets2.Views.ReportTicketListItem extends Tickets2.Views.Base
 
   template: _.template("<span class='status'><%- Tickets2.Models.Ticket.statusLabel(status) %></span>
                             <span class='subject'><%- subject %></span>
