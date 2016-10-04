@@ -34,10 +34,6 @@ class Tickets2.Models.Ticket extends Tickets2.Models.Base
     this.restMethod('create?subject='+subject+'&description='+description, 'POST', this.ticketCreated, errorHandler)
     return
 
-  refreshTickets: ->
-    Tickets2.Views.TicketsIndex.render()
-    return
-
-  update: (status) ->
-    this.restMethod('update_ticket?id='+this.get('id')+'&status='+status, 'PATCH', this.refreshTickets, null)
+  update: (status, successHandler, errorHandler) ->
+    this.restMethod('update_ticket?id='+this.get('id')+'&status='+status, 'PATCH', successHandler, errorHandler)
     return
