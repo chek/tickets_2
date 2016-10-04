@@ -38,7 +38,7 @@
     
 ## Test using
   
-  From seed data in system exist 6 users admin@test.com, support@test.com, support1@test.com, customer@test.com, customer1@test.com, customer2@test.com. Each of them has same password 'qwer1234'. Also you can register other user and assign him role from admin@test.com user
+  From seed data in system exist 3 users admin@test.com, support@test.com, customer@test.com. Each of them has same password 'qwer1234'. Also you can register other user and assign him role from admin@test.com user
   
 ## Logic of the system   
 
@@ -49,6 +49,7 @@
   Only Customer can create a new Ticket, which assigns to random Support Agent.
   When Support Agent get new Ticket need set up to 'in process' state. 
   After finishing support issue Support Agent must set up it to 'closed' state.
+  After that Customer can to ‘cofirm’ ticket closing. 
   Customer can set up Ticket to 'deleted' state all the time until it closed.
 
 #### RSPEC was required but i've done the tests with built-in Rails tests
