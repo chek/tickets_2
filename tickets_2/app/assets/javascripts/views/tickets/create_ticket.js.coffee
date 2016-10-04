@@ -54,7 +54,7 @@ class Tickets2.Views.CreateTicket extends Tickets2.Views.Base
       $('#ticket-subject').val('')
       $('#ticket-description').val('')
       ticket = new Tickets2.Models.Ticket()
-      ticket.create(subject, description)
+      ticket.create(subject, description, Tickets2.Views.TicketsIndex.render, null)
       this.closeModal()
     else
       $('#create-ticket-container .help-inline').show()
