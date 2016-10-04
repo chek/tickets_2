@@ -16,29 +16,28 @@ class Tickets2.Models.User extends Tickets2.Models.Base
 
   logoutSuccess: ->
     Tickets2.Models.User.setCurrentUser(null, null)
-    if Tickets2.Vars.successHandler?
-      Tickets2.Vars.successHandler()
-      Tickets2.Vars.successHandler = null
+    Tickets2.Models.Base.successHandler()
 
   logout: (successHandler, errorHandler) ->
     Tickets2.Vars.successHandler = successHandler
+    Tickets2.Vars.errorHandler = errorHandler
     this.restMethod('sign_out_ajax', 'POST', this.logoutSuccess, this.logoutSuccess);
     return
 
   loginSuccess: (data) ->
     Tickets2.Models.User.setCurrentUser(data.user_id, data.role)
-    if Tickets2.Vars.successHandler?
-      Tickets2.Vars.successHandler()
-      Tickets2.Vars.successHandler = null
+    Tickets2.Models.Base.successHandler()
 
   login: (email, password, successHandler, errorHandler) ->
     Tickets2.Vars.successHandler = successHandler
-    this.restMethod('sign_in_ajax?email='+email+'&password='+password, 'POST', this.loginSuccess, errorHandler);
+    Tickets2.Vars.errorHandler = errorHandler
+    this.restMethod('sign_in_ajax?email='+email+'&password='+password, 'POST', this.loginSuccess, Tickets2.Models.Base.errorHandler);
     return
 
   signup: (email, password, successHandler, errorHandler) ->
     Tickets2.Vars.successHandler = successHandler
-    this.restMethod('sign_up_ajax?email='+email+'&password='+password, 'POST', this.loginSuccess, errorHandler);
+    Tickets2.Vars.errorHandler = errorHandler
+    this.restMethod('sign_up_ajax?email='+email+'&password='+password, 'POST', this.loginSuccess, Tickets2.Models.Base.errorHandler);
     return
 
   updateRole: ->

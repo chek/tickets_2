@@ -24,14 +24,13 @@ class Tickets2.Models.Ticket extends Tickets2.Models.Base
   ticketCreated: (data) ->
     ticket = new Tickets2.Models.Ticket(data.ticket);
     Tickets2.Vars.tickets.add(ticket)
-    if Tickets2.Vars.successHandler?
-      Tickets2.Vars.successHandler()
-      Tickets2.Vars.successHandler = null
+    Tickets2.Models.Base.successHandler()
     return
 
   create: (subject, description, successHandler, errorHandler) ->
     Tickets2.Vars.successHandler = successHandler
-    this.restMethod('create?subject='+subject+'&description='+description, 'POST', this.ticketCreated, errorHandler)
+    Tickets2.Vars.errorHandler = errorHandler
+    this.restMethod('create?subject='+subject+'&description='+description, 'POST', this.ticketCreated, Tickets2.Models.Base.errorHandler)
     return
 
   update: (status, successHandler, errorHandler) ->

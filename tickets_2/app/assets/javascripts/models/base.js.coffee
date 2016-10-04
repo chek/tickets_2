@@ -16,3 +16,15 @@ class Tickets2.Models.Base extends  Backbone.Model
         if successHandler?
           successHandler(data)
     return
+
+  @successHandler: ->
+    if Tickets2.Vars.successHandler?
+      Tickets2.Vars.successHandler()
+    Tickets2.Vars.successHandler = null
+    Tickets2.Vars.errorHandler = null
+
+  @errorHandler: ->
+    if Tickets2.Vars.errorHandler?
+      Tickets2.Vars.errorHandler()
+    Tickets2.Vars.successHandler = null
+    Tickets2.Vars.errorHandler = null
