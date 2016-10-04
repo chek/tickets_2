@@ -117,17 +117,22 @@ class Tickets2.Views.UsersLogin extends Tickets2.Views.Base
       $('#sign-up-container .password-confirm .help-block').show()
 
     if valid
-      Tickets2.Models.User.currentUser.signup(emailAddress, $('#signUpInputPassword').val(), this.closeModal, this.error)
+      Tickets2.Models.User.currentUser.signup(emailAddress, $('#signUpInputPassword').val(), this.success, this.error)
 
     return
+
+  success: ->
+    Tickets2.Views.Base.closeModal()
+    Tickets2.initViews()
+
 
   login: (e) ->
     e.preventDefault()
-    Tickets2.Models.User.currentUser.login($('#inputEmail').val(), $('#inputPassword').val(), this.closeModal, this.error)
+    Tickets2.Models.User.currentUser.login($('#inputEmail').val(), $('#inputPassword').val(), this.success, this.error)
     return
 
   logout: ->
-    Tickets2.Models.User.currentUser.logout()
+    Tickets2.Models.User.currentUser.logout(Tickets2.initViews, null)
     return
 
   render: ->

@@ -77,14 +77,14 @@ class Tickets2.Views.TicketListItem extends Tickets2.Views.Base
     e.preventDefault()
     nextStatus = Tickets2.Models.Ticket.deletedStatus
     this.model.update(nextStatus)
-    this.closeModal()
+    Tickets2.Views.Base.closeModal()
     return
 
   confirmTicket: (e) ->
     e.preventDefault()
     nextStatus = Tickets2.Models.Ticket.confirmedStatus
     this.model.update(nextStatus)
-    this.closeModal()
+    Tickets2.Views.Base.closeModal()
     return
 
   render: ->

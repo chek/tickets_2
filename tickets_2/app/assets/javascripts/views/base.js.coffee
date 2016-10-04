@@ -1,6 +1,6 @@
 class Tickets2.Views.Base extends Backbone.View
 
-  closeModal: ->
+  @closeModal: ->
     $('.modal-form', this.$el).modal('hide')
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();

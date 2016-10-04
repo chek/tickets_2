@@ -55,7 +55,7 @@ class Tickets2.Views.SupportTicketListItem extends Tickets2.Views.Base
     if this.model.get('status') == Tickets2.Models.Ticket.inProcessStatus
       nextStatus = Tickets2.Models.Ticket.closedStatus
     this.model.update(nextStatus)
-    this.closeModal()
+    Tickets2.Views.Base.closeModal()
     return
 
   render: ->

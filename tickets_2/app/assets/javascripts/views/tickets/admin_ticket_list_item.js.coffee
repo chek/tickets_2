@@ -80,7 +80,7 @@ class Tickets2.Views.AdminTicketListItem extends Tickets2.Views.Base
     e.preventDefault()
     nextStatus = Tickets2.Models.Ticket.deletedStatus
     this.model.update(nextStatus)
-    this.closeModal()
+    Tickets2.Views.Base.closeModal()
     return
 
   render: ->

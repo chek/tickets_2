@@ -16,10 +16,12 @@ class Tickets2.Models.User extends Tickets2.Models.Base
 
   logoutSuccess: ->
     Tickets2.Models.User.setCurrentUser(null, null)
-    if !Tickets2.isTestEnv()
-      Tickets2.initViews()
+    if Tickets2.Vars.successHandler?
+      Tickets2.Vars.successHandler()
+      Tickets2.Vars.successHandler = null
 
-  logout: ->
+  logout: (successHandler, errorHandler) ->
+    Tickets2.Vars.successHandler = successHandler
     this.restMethod('sign_out_ajax', 'POST', this.logoutSuccess, this.logoutSuccess);
     return
 
@@ -28,8 +30,6 @@ class Tickets2.Models.User extends Tickets2.Models.Base
     if Tickets2.Vars.successHandler?
       Tickets2.Vars.successHandler()
       Tickets2.Vars.successHandler = null
-    if !Tickets2.isTestEnv()
-      Tickets2.initViews()
 
   login: (email, password, successHandler, errorHandler) ->
     Tickets2.Vars.successHandler = successHandler

@@ -4,11 +4,6 @@ window.Tickets2 =
   Views: {}
   Routers: {}
   Vars: {}
-  isTestEnv: ->
-    if Tickets2.Vars.testEnv?
-      return Tickets2.Vars.testEnv
-    else
-      return true
   initialize: ->
     Tickets2.Models.User.setCurrentUser(null, null)
     Tickets2.Models.User.currentUser.getCurrentUser()
@@ -39,6 +34,6 @@ $(document).ready ->
   Tickets2.Vars.testEnv = false
   if window.location.href.indexOf('http://localhost:3000/specs') >= 0
     Tickets2.Vars.testEnv = true
-  if !Tickets2.isTestEnv()
+  if !Tickets2.Vars.testEnv
     Tickets2.initialize()
 

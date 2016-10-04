@@ -13,7 +13,6 @@ describe('User', function() {
              if (typeof url == 'object') {
                  url.success(data)
              } else if (typeof params == 'object') {
-
                  params.success(data)
              }
          });
@@ -22,9 +21,13 @@ describe('User', function() {
          expect(Tickets2.Models.User.currentUser.get('id')).toBe(8);
     });
     it("login", function() {
-        var data = {user_id: 9, role: "customer"};
         spyOn( $, 'ajax' ).and.callFake( function (url, params) {
-            params.success(data);
+            var data = MockHelper.mock(url, params);
+            if (typeof url == 'object') {
+                url.success(data)
+            } else if (typeof params == 'object') {
+                params.success(data)
+            }
         });
         Tickets2.Models.User.currentUser.login('customer@test.com', 'qwer1234')
         expect(Tickets2.Models.User.currentUser.get('id')).toBe(9);

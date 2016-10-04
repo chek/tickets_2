@@ -40,7 +40,6 @@ class Tickets2.Views.TicketsIndex extends Tickets2.Views.Base
     header = "<li><h5 class='status'>Status</h5>
         <h5 class='subject'>Subject</h5>
         <h5 class='description'>Description</h5></li>"
-    if !Tickets2.isTestEnv()
-      this.$list.append(header);
-      if Tickets2.Vars.tickets?
-        Tickets2.Vars.tickets.each(this.addOne, this);
+    this.$list.append(header);
+    if Tickets2.Vars.tickets?
+      Tickets2.Vars.tickets.each(this.addOne, this);

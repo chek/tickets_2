@@ -9,6 +9,9 @@
                 if (url.indexOf('/users/get_current_user') >= 0) {
                     data = {user_id: 8, role: "support"}
                 }
+                if (url.indexOf('/users/sign_in_ajax') >= 0) {
+                    data = {user_id: 9, role: "support"}
+                }
             } else if  (typeof url == 'object') {
                 if (url.url.indexOf('/tickets/create') >= 0) {
                     data = {ticket: {subject: 'subject', description: "description"}}
