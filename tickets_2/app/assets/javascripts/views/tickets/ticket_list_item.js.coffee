@@ -91,7 +91,8 @@ class Tickets2.Views.TicketListItem extends Tickets2.Views.Base
     try
       this.$el.html(this.template(this.model.toJSON()))
     catch error
-      console.log error
+      #console.log error
+      Tickets2.Views.TicketsIndex.render()
     if Tickets2.Models.Ticket.closedStatus == this.model.get('status')
       editDialog = $('.' + this.model.get('id') + '_edit', this.$el)
       form = $('form', editDialog)
