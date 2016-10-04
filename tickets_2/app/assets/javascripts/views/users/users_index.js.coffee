@@ -12,10 +12,10 @@ class Tickets2.Views.UsersIndex extends Tickets2.Views.Base
     this.listenTo(Tickets2.Vars.users, 'all', this.all);
 
   render: ->
-    Tickets2.Vars.users.fetch({reset: true})
     this.$el.html(this.template())
     $('#content').html(this.$el)
     this.$list = $('ul', this.$el).first()
+    Tickets2.Vars.users.fetch({reset: true})
     return this
 
   addOne: (user) ->
