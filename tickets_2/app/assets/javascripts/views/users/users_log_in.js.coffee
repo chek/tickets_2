@@ -93,10 +93,6 @@ class Tickets2.Views.UsersLogin extends Tickets2.Views.Base
     'click button.sign-up': 'signup'
   }
 
-  success: ->
-    this.closeModal()
-    return
-
   error: (status) ->
     $('#login-container .help-inline').show()
     return
@@ -121,13 +117,13 @@ class Tickets2.Views.UsersLogin extends Tickets2.Views.Base
       $('#sign-up-container .password-confirm .help-block').show()
 
     if valid
-      Tickets2.Models.User.currentUser.signup(emailAddress, $('#signUpInputPassword').val(), this.success, this.error)
+      Tickets2.Models.User.currentUser.signup(emailAddress, $('#signUpInputPassword').val(), this.closeModal, this.error)
 
     return
 
   login: (e) ->
     e.preventDefault()
-    Tickets2.Models.User.currentUser.login($('#inputEmail').val(), $('#inputPassword').val(), this.success, this.error)
+    Tickets2.Models.User.currentUser.login($('#inputEmail').val(), $('#inputPassword').val(), this.closeModal, this.error)
     return
 
   logout: ->
