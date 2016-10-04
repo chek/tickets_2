@@ -15,10 +15,10 @@ class Tickets2.Views.TicketsReport extends Tickets2.Views.Base
     this.listenTo(Tickets2.Vars.tickets, 'reset', this.addAll);
 
   render: ->
-    Tickets2.Vars.tickets.fetch({reset: true})
     this.$el.html(this.template())
     $('#content').html(this.$el)
     this.$list = $('ul', this.$el).first()
+    Tickets2.Vars.tickets.fetch({reset: true})
     return this
 
   addOne: (ticket) ->

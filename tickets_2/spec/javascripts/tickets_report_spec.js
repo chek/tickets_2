@@ -1,11 +1,11 @@
 //= require models/user
-describe('UserIndex', function() {
+describe('TicketsReport', function() {
     beforeEach(function() {
-        Tickets2.Models.User.setCurrentUser(1, 'admin');
         jasmine.getFixtures().fixturesPath = 'assets/fixtures';
         loadFixtures('application.html');
     })
-    it("render users list", function() {
+    it("render tickets report support", function() {
+        Tickets2.Models.User.setCurrentUser(1, 'support');
         spyOn( $, 'ajax' ).and.callFake( function (url, params) {
             var data = MockHelper.mock(url, params);
             if (typeof url == 'object') {
@@ -14,9 +14,8 @@ describe('UserIndex', function() {
                 params.success(data)
             }
         });
-        usersView = new Tickets2.Views.UsersIndex({})
-        usersView.render()
-        expect($('ul.users').length).toBe(1);
-        expect($('ul.users li').length).toBe(9);
+        Tickets2.Views.TicketsReport.render();
+        expect($('ul.tickets').length).toBe(1);
+        expect($('ul.tickets li').length).toBe(3);
     });
 });
