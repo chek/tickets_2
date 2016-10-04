@@ -1,9 +1,15 @@
-class Tickets2.Views.SupportTicketListItem extends Backbone.View
+class Tickets2.Views.SupportTicketListItem extends Tickets2.Views.Base
 
   template: _.template("<span class='status'><%- Tickets2.Models.Ticket.statusLabel(status) %></span>
                             <span class='subject'><%- subject %></span>
                             <span class='description'><%- description %></span>
+                            <%
+                            // open btn
+                            %>
                             <button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>_edit'>open</button>
+                            <%
+                            // open dlg
+                            %>
                             <div class='modal fade process-ticket modal-form <%- id %>_edit' tabindex='-1' role='dialog' aria-labelledby='modal-label' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
@@ -49,9 +55,7 @@ class Tickets2.Views.SupportTicketListItem extends Backbone.View
     if this.model.get('status') == Tickets2.Models.Ticket.inProcessStatus
       nextStatus = Tickets2.Models.Ticket.closedStatus
     this.model.update(nextStatus)
-    $('.process-ticket.modal-form', this.$el).modal('hide')
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
+    this.closeModal()
     return
 
   render: ->

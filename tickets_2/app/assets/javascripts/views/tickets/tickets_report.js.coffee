@@ -1,4 +1,4 @@
-class Tickets2.Views.TicketsReport extends Backbone.View
+class Tickets2.Views.TicketsReport extends Tickets2.Views.Base
 
   @render: ->
     ticketsReportView = new Tickets2.Views.TicketsReport({})

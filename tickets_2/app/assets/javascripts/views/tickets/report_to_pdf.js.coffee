@@ -1,4 +1,4 @@
-class Tickets2.Views.ReportToPDF extends Backbone.View
+class Tickets2.Views.ReportToPDF extends Tickets2.Views.Base
 
   template: _.template("<button type='button' class='btn pdf btn-primary'>To PDF</button>")
 

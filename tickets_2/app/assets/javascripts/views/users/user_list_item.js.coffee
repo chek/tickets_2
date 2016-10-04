@@ -1,7 +1,14 @@
-class Tickets2.Views.UserListItem extends Backbone.View
+class Tickets2.Views.UserListItem extends Tickets2.Views.Base
 
-  template: _.template("<span class='email'><%- email %></span><span class='role'><%- role %></span><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>'>edit</button>
-                               <div class='modal fade modal-form <%- id %>' tabindex='-1' role='dialog' aria-labelledby='mySmallModalLabel' aria-hidden='true'>
+  template: _.template("<span class='email'><%- email %></span><span class='role'><%- role %></span>
+                            <%
+                            // edit btn
+                            %>
+                            <button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='.<%- id %>'>edit</button>
+                            <%
+                            // edit dlg
+                            %>
+                            <div class='modal fade modal-form <%- id %>' tabindex='-1' role='dialog' aria-labelledby='mySmallModalLabel' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
                                   <div class='modal-header'>
@@ -46,10 +53,7 @@ class Tickets2.Views.UserListItem extends Backbone.View
     this.model.set('role', $('.roles-list', this.$el).val())
     this.model.updateRole()
     $('span.role', this.$el).text($('.roles-list', this.$el).val())
-    $('.modal-form', this.$el).modal('hide')
-    $('#sign-up-container').modal('hide')
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
+    this.closeModal()
     return
 
   render: ->

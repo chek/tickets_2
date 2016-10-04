@@ -1,4 +1,4 @@
-class Tickets2.Views.UsersIndex extends Backbone.View
+class Tickets2.Views.UsersIndex extends Tickets2.Views.Base
 
   template: _.template("<h1>Users</h1>" +
                        "<ul class='users list-unstyled'></ul>")

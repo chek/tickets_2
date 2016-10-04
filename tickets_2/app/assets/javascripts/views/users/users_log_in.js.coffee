@@ -1,16 +1,19 @@
-class Tickets2.Views.UsersLogin extends Backbone.View
+class Tickets2.Views.UsersLogin extends Tickets2.Views.Base
 
   logoutTemplate: _.template("<button type='button' class='btn logout btn-primary'>Sign out</button>")
 
-  loginTemplate: _.template("<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-sm'>Sign in</button>
-                            <div id='login-container' class='modal fade bd-example-modal-sm' tabindex='-1' role='dialog' aria-labelledby='mySmallModalLabel' aria-hidden='true'>
+  loginTemplate: _.template("<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.sign-in-modal'>Sign in</button>
+                            <%
+                            // login dlg
+                            %>
+                            <div id='login-container' class='modal fade modal-form sign-in-modal' tabindex='-1' role='dialog' aria-labelledby='sign-in-modal-label' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
                                   <div class='modal-header'>
                                     <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
                                       <span aria-hidden='true'>×</span>
                                     </button>
-                                    <h4 class='modal-title' id='mySmallModalLabel'>Sign in</h4>
+                                    <h4 class='modal-title' id='sign-in-modal-label'>Sign in</h4>
                                   </div>
                                   <div class='modal-body'>
                                     <form data-toggle='validator' role='form'>
@@ -35,15 +38,18 @@ class Tickets2.Views.UsersLogin extends Backbone.View
                               </div>
                             </div>")
 
-  signUpTemplate: _.template("<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.sign-up-bd-example-modal-sm'>Sign up</button>
-                            <div id='sign-up-container' class='modal fade sign-up-bd-example-modal-sm' tabindex='-1' role='dialog' aria-labelledby='mySmallModalLabel' aria-hidden='true'>
+  signUpTemplate: _.template("<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.sign-up'>Sign up</button>
+                            <%
+                            // sign-up dlg
+                            %>
+                            <div id='sign-up-container' class='modal fade modal-form sign-up' tabindex='-1' role='dialog' aria-labelledby='sign-up-modal-label' aria-hidden='true'>
                               <div class='modal-dialog modal-sm'>
                                 <div class='modal-content'>
                                   <div class='modal-header'>
                                     <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
                                       <span aria-hidden='true'>×</span>
                                     </button>
-                                    <h4 class='modal-title'>Sign up</h4>
+                                    <h4 class='modal-title' id='sign-up-modal-label'>Sign up</h4>
                                   </div>
                                   <div class='modal-body'>
                                     <form id='sign-up-form' data-toggle='validator' role='form'>
@@ -88,10 +94,7 @@ class Tickets2.Views.UsersLogin extends Backbone.View
   }
 
   success: ->
-    $('#login-container').modal('hide')
-    $('#sign-up-container').modal('hide')
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
+    this.closeModal()
     return
 
   error: (status) ->

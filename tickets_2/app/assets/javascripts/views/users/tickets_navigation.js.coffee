@@ -1,4 +1,4 @@
-class Tickets2.Views.TicketsNavigation extends Backbone.View
+class Tickets2.Views.TicketsNavigation extends Tickets2.Views.Base
 
   template: _.template("<button type='button' class='btn tickets btn-primary'>Tickets</button>")
 
