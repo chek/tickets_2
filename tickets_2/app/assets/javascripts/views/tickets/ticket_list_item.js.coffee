@@ -80,7 +80,11 @@ class Tickets2.Views.TicketListItem extends Backbone.View
     return
 
   render: ->
-    this.$el.html(this.template(this.model.toJSON()))
+    try
+      this.$el.html(this.template(this.model.toJSON()))
+    catch error
+      console.log error
+    finally
     if Tickets2.Models.Ticket.closedStatus == this.model.get('status')
       editDialog = $('.' + this.model.get('id') + '_edit', this.$el)
       form = $('form', editDialog)
