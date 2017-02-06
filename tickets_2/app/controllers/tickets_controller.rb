@@ -25,8 +25,9 @@ class TicketsController < ApplicationController
       @agents = User.where('id in (?)', agents_ids)
       #fetch customers and agents together with tickets, search 1475435340
       return render json: {tickets: @tickets, customers: @customers, agents: @agents }, :status => 200
-    rescue
-      return render json: {}, :status => 500
+    rescue Exception => e
+      #puts e.message
+      return render json: {error: e.message}, :status => 500
     end
   end
 
