@@ -47,26 +47,24 @@ class TicketsController < ApplicationController
 
   def update_ticket
     begin
-      @ticket = Ticket.find(params[:id])
       next_status = params[:status].to_i
-      valid = false
       #customer can only delete or confirm ticket
-      if TicketStatus::DELETED == next_status and [TicketStatus::IN_PROCESS, TicketStatus::NEW].include?(@ticket.status) and @ticket.customer_id == current_user.id
-        valid = true
+      if TicketStatus::DELETED == next_status and current_user.role == UserRole::CUSTOMER
+        @ticket = current_user.tickets.where("status in (?)", [TicketStatus::IN_PROCESS, TicketStatus::NEW]).where("id = ?", params[:id]).first
       #customer can only delete or confirm ticket
-      elsif TicketStatus::CONFIRMED == next_status and [TicketStatus::CLOSED].include?(@ticket.status) and @ticket.customer_id == current_user.id
-        valid = true
+      elsif TicketStatus::CONFIRMED == next_status and current_user.role == UserRole::CUSTOMER
+        @ticket = current_user.tickets.where("status in (?)", [TicketStatus::CLOSED]).where("id = ?", params[:id]).first
       #support can process ticket
-      elsif next_status == TicketStatus::IN_PROCESS and [TicketStatus::NEW].include?(@ticket.status) and @ticket.agent_id == current_user.id
-        valid = true
+      elsif next_status == TicketStatus::IN_PROCESS and current_user.role == UserRole::SUPPORT
+        @ticket = current_user.tickets.where("status in (?)", [TicketStatus::NEW]).where("id = ?", params[:id]).first
       #support can close ticket
-      elsif next_status == TicketStatus::CLOSED and [TicketStatus::IN_PROCESS].include?(@ticket.status) and @ticket.agent_id == current_user.id
-        valid = true
+      elsif next_status == TicketStatus::CLOSED and current_user.role == UserRole::SUPPORT
+        @ticket = current_user.tickets.where("status in (?)", [TicketStatus::IN_PROCESS]).where("id = ?", params[:id]).first
       #admin can delete any ticket
       elsif TicketStatus::DELETED == next_status and current_user.role == UserRole::ADMIN
-        valid = true
+        @ticket = current_user.tickets.where("id = ?", params[:id]).first
       end
-      if valid
+      if !@ticket.blank?
         @ticket.status = next_status
         @ticket.save
         return render json: {ticket: @ticket}, :status => 200
