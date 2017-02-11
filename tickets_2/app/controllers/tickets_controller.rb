@@ -55,31 +55,22 @@ class TicketsController < ApplicationController
 
   def update_ticket
     begin
-      next_status = params[:status].to_i
-      #customer can only delete or confirm ticket
-      if TicketStatus::DELETED == next_status and current_user.role == UserRole::CUSTOMER
-        @ticket = current_user.tickets.where("status in (?)", [TicketStatus::IN_PROCESS, TicketStatus::NEW]).where("id = ?", params[:id]).first
-      #customer can only delete or confirm ticket
-      elsif TicketStatus::CONFIRMED == next_status and current_user.role == UserRole::CUSTOMER
-        @ticket = current_user.tickets.where("status in (?)", [TicketStatus::CLOSED]).where("id = ?", params[:id]).first
-      #support can process ticket
-      elsif next_status == TicketStatus::IN_PROCESS and current_user.role == UserRole::SUPPORT
-        @ticket = current_user.tickets.where("status in (?)", [TicketStatus::NEW]).where("id = ?", params[:id]).first
-      #support can close ticket
-      elsif next_status == TicketStatus::CLOSED and current_user.role == UserRole::SUPPORT
-        @ticket = current_user.tickets.where("status in (?)", [TicketStatus::IN_PROCESS]).where("id = ?", params[:id]).first
-      #admin can delete any ticket
-      elsif TicketStatus::DELETED == next_status and current_user.role == UserRole::ADMIN
-        @ticket = current_user.tickets.where("id = ?", params[:id]).first
+      status = params[:status].to_i
+      if !current_user.avaliable_statuses(status).blank?
+        @ticket = current_user.tickets
+                      .where("status in (?)", current_user.avaliable_statuses(status))
+                      .where("id = ?", params[:id]).first
+      else
+        return render json: {}, :status => 401
       end
       if !@ticket.blank?
-        @ticket.status = next_status
+        @ticket.status = status
         @ticket.save
         return render json: {ticket: @ticket}, :status => 200
       else
         return render json: {}, :status => 401
       end
-    rescue
+    rescue Exception => ex
       return render json: {}, :status => 500
     end
   end
