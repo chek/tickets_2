@@ -50,10 +50,4 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
-  test "admin should delete_ticket" do
-    post '/users/sign_in_ajax', email: @user_admin.email, password: 'qwer1234'
-    patch '/tickets/update_ticket', id: @ticket.id, status: TicketStatus::DELETED
-    assert_response 200
-  end
-
 end
